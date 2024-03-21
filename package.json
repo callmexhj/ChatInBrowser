@@ -1,0 +1,20 @@
+{
+  "name": "demo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite -c vite.popup.config.js",
+    "build": "vite build -c vite.popup.config.js && vite build -c vite.content.config.js && vite build -c vite.background.config.js && node build.js",
+    "preview": "vite preview -c vite.popup.config.js"
+  },
+  "dependencies": {
+    "@types/node": "^20.11.30",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "vite": "^5.2.0"
+  }
+}
