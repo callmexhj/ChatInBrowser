@@ -17,5 +17,20 @@
             "js": ["content.js"],
             "css": ["content.css"]
         }
+    ],
+    "permissions": [
+        "storage",
+        "declarativeContent",
+        "activeTab",
+        "scripting",
+        "webRequest",
+        "clipboardWrite",
+        "clipboardRead",
+        "tabs",
+        "contextMenus",
+        "notifications",
+        "downloads",
+        "clipboardWrite",
+        "clipboardRead"
     ]
 }
