@@ -1,1 +1,1 @@
-"use strict";
+"use strict";chrome.contextMenus.create({id:"search",title:"ChatInBrowser",type:"normal",contexts:["selection"]});chrome.contextMenus.onClicked.addListener(async(e,t)=>{console.log(e),e.menuItemId==="search"&&await chrome.tabs.sendMessage(t.id,{action:"userCopy",data:e.selectionText})});

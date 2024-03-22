@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@types/node": "^20.11.30",
+    "ant-design-vue": "4.x",
+    "unplugin-vue-components": "^0.26.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },

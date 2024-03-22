@@ -3,6 +3,8 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import { CRX_CONTENT_OUTDIR } from './globalConfig'
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
+import Components from 'unplugin-vue-components/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -33,5 +35,11 @@ export default defineConfig({
     define: {
         'process.env.NODE_ENV': null
     },
-    plugins: [vue()],
+    plugins: [vue(), Components({
+        resolvers: [
+            AntDesignVueResolver({
+                importStyle: false
+            })
+        ]
+    })],
 })

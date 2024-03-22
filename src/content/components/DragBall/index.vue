@@ -21,7 +21,7 @@
   let containerWidth = ref(50); // 初始容器宽度
   const scrollbarWidth = getScrollbarWidth();
   const props = defineProps({
-    showDialog: {
+    isShowChatBox: {
       type: Boolean,
       default: false
   
@@ -66,14 +66,12 @@
   };
   
   // 监听容器宽度变化
-  watch(() => props.showDialog, () => {
-    console.log(props.showDialog)
-    if (props.showDialog) {
-      containerWidth.value = 240
+  watch(() => props.isShowChatBox, () => {
+    if (props.isShowChatBox) {
+      containerWidth.value = 255
     } else {
       containerWidth.value = 50
     }
-    console.log(containerWidth.value)
     handleResize()
     stopDrag()
   });
@@ -131,8 +129,6 @@
   }
   
   .ball-container {
-    overflow: hidden;
-    border-radius: 25px;
     transition: width 0.3s; /* 添加过渡效果 */
   }
   </style>
