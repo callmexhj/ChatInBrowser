@@ -3,19 +3,19 @@
         <div class="default-button" v-if="!isShowChatBox" @mousedown="handhowMouseDown" @mouseup="showChatBox"></div>
         <div class="chat-box-content" :style="{ backgroundColor: `${colorPrimary}a0` }" v-else>
             <div class="content-top">
-                <top-button-group @close="handleClose" />
+                <top-button-group @close="handleClose" @clear="handleClear" />
                 <div class="info-message" :style="{ backgroundColor: `${colorPrimary}f0` }">
-                    <p>{{ copyValue }}</p>
+                    <p>{{ displayValue }}</p>
                 </div>
-                <message-content :messages="messages" />
+                <message-content :messages="messages" :firstSearchQuestion="firstSearchQuestion" />
             </div>
-            <input-content />
+            <input-content ref="inputContent"  @search="handleSearch"/>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import TopButtonGroup from './components/TopButtonGroup.vue'
 import MessageContent from './components/MessageContent.vue'
 import InputContent from './components/InputContent.vue'
@@ -32,43 +32,18 @@ const props = defineProps({
     copyValue: {
         type: String,
         default: '请选中内容'
+    },
+    messages: {
+        type: Array,
+        default: () => []
+    },
+    firstSearchQuestion: {
+        type: String,
+        default: ''
     }
 })
-const emit = defineEmits(['onShowChatBox', 'close'])
-const messages = ref([
-    {
-        role: 'user',
-        value: '111111'
-    },
-    {
-        role: 'system',
-        value: '2222222222222222222222222222222222222222222'
-    },
-    {
-        role: 'user',
-        value: '111111'
-    },
-    {
-        role: 'system',
-        value: '222222'
-    },
-    {
-        role: 'user',
-        value: '111111'
-    },
-    {
-        role: 'system',
-        value: '2222222222222222222222222222222222222222222'
-    },
-    {
-        role: 'system',
-        value: '2222222222222222222222222222222222222222222'
-    },
-    {
-        role: 'user',
-        value: '111111'
-    },
-])
+const inputContent = ref()
+const emit = defineEmits(['onShowChatBox', 'close', 'search', 'clear'])
 let startTime = 0
 
 const handhowMouseDown = () => {
@@ -83,6 +58,20 @@ const showChatBox = () => {
 const handleClose = () => {
     emit('close')
 }
+
+const handleClear = () => {
+    emit('clear')
+}
+
+const handleSearch = (value) => {
+    emit('search', value)
+    inputContent.value.handleClear()
+}
+
+const displayValue = computed(() => {
+    return props.copyValue === '' ? '可复制网页文字作为搜索内容' : props.copyValue
+})
+
 </script>
 
 <style scoped>

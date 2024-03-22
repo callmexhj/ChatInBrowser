@@ -1,8 +1,8 @@
 <template>
     <div class="message-content">
-        <div class="messages" v-for="message in messages" :key="message.value" :class="messageStyle(message)">
+        <div class="messages" v-for="(message, index) in messages" :key="`${message.role}_${index}`" :class="messageStyle(message)">
             <div class="message-item">
-                {{ message.value }}
+                {{ messageContent(message, index) }}
             </div>
         </div>
     </div>
@@ -15,12 +15,22 @@ const props = defineProps({
     messages: {
         type: Array,
         default: () => []
+    },
+    firstSearchQuestion: {
+        type: String,
+        default: ''
     }
 })
 
 const messageStyle = computed(() => {
     return (message) => {
         return message.role === 'user' ? 'message-item-user' : 'message-item-system'
+    }
+})
+
+const messageContent = computed(() => {
+    return (message, index) => {
+        return index === 0 ? props.firstSearchQuestion :  message.content
     }
 })
 

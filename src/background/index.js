@@ -1,3 +1,5 @@
+import '../tools/chat'
+
 chrome.contextMenus.create({
     id: 'search',
     title: 'ChatInBrowser',
