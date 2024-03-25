@@ -1,6 +1,6 @@
 <template>
     <div class="input-content">
-        <TextArea class="input-content-input" v-model:value="userInput" placeholder="请输入您的问题" autoSize  />
+        <TextArea class="input-content-input" v-model:value="userInput" :autofocus="true" placeholder="shift+enter快捷发送" autoSize @keydown="handleKeyDown"  />
         <Button shape="circle" type="primary" @click="handleClick">
             <template #icon>
                 <SearchOutlined />
@@ -24,6 +24,12 @@ const handleClick = () => {
 
 const handleClear = () => {
     userInput.value = ''
+}
+
+const handleKeyDown = (e) => {
+    if (e.shiftKey && e.key === 'Enter') {
+        handleClick()
+    }
 }
 
 defineExpose({
