@@ -75,6 +75,10 @@ const displayValue = computed(() => {
 </script>
 
 <style scoped>
+.chat-box {
+    text-align: start;
+}
+
 .default-button {
     width: 50px;
     height: 50px;
