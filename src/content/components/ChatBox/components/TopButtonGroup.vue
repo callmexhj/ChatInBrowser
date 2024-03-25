@@ -1,11 +1,14 @@
 <template>
     <div class="button-group-background">
         <ButtonGroup>
-            <Button shape="circle">
-                <template #icon>
-                    <SettingOutlined />
-                </template>
-            </Button>
+            <!-- TODO： 自动打开popup -->
+            <Tooltip title="请点击插件图标进行设置">
+                <Button shape="circle">
+                    <template #icon>
+                        <SettingOutlined />
+                    </template>
+                </Button>
+            </Tooltip>
             <Button shape="circle" @click="handleClear">
                 <template #icon>
                     <ClearOutlined />
@@ -21,7 +24,7 @@
 </template>
 
 <script setup>
-import { Button } from 'ant-design-vue'
+import { Button, Tooltip } from 'ant-design-vue'
 import {
     SettingOutlined,
     ClearOutlined,
@@ -30,12 +33,15 @@ import {
 
 const emit = defineEmits(['close', 'clear'])
 const ButtonGroup = Button.Group
+
 const handleClose = () => {
     emit('close')
 }
+
 const handleClear = () => {
     emit('clear')
 }
+
 </script>
 
 <style scoped>

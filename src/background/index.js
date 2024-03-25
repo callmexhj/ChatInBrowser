@@ -10,7 +10,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     console.log(info)
     if (info.menuItemId === "search") {
         await chrome.tabs.sendMessage(tab.id, {
-            action:'userCopy',
+            action: 'userCopy',
             data: info.selectionText
         })
     }
