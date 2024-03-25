@@ -28,7 +28,7 @@
 import { ref, onMounted, reactive } from 'vue';
 import DragBall from './components/DragBall/index.vue'
 import ChatBox from './components/ChatBox/index.vue'
-import { ConfigProvider } from 'ant-design-vue'
+import { ConfigProvider, Modal } from 'ant-design-vue'
 import { genPromptText } from '../tools/genPromptText'
 
 const dragBallRef = ref()
@@ -55,8 +55,17 @@ const handleClear = () => {
 
 const messageListener = (request, sender, sendResponse) => {
     if (request.action === 'userCopy') {
-        // TODO: 增加删除确认
-        handleClear()
+        // TODO: 增加不再提醒的选项
+        if (messages.length > 0) {
+            Modal.confirm({
+                title: '此操作将清除ChatInBrowser的历史记录，请确认是否继续',
+                okText: '确认',
+                cancelText: '取消',
+                onOk() {
+                    handleClear()
+                }
+            })
+        }
         copyValue.value = request.data
         onShowChatBox()
     }
