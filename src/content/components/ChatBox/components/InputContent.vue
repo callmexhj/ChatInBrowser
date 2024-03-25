@@ -1,9 +1,9 @@
 <template>
     <div class="input-content">
-        <TextArea class="input-content-input" v-model:value="userInput" :autofocus="true" placeholder="shift+enter快捷发送" auto-size @keydown="handleKeyDown"  />
+        <TextArea class="input-content-input" v-model:value="userInput" :autofocus="true" placeholder="按shift+enter快捷发送" auto-size @keydown="handleKeyDown"  />
         <Button shape="circle" type="primary" @click="handleClick">
             <template #icon>
-                <SearchOutlined />
+                <MessageOutlined />
             </template>
         </Button>
     </div>
@@ -12,7 +12,7 @@
 <script setup>
 import { ref } from 'vue'
 import { Input, Button, message } from 'ant-design-vue'
-import { SearchOutlined } from '@ant-design/icons-vue'
+import { MessageOutlined } from '@ant-design/icons-vue'
 
 const TextArea  = Input.TextArea
 const emit = defineEmits(['search'])

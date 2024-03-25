@@ -3,7 +3,7 @@
         <ButtonGroup>
             <Button shape="circle">
                 <template #icon>
-                    <QuestionOutlined />
+                    <SettingOutlined />
                 </template>
             </Button>
             <Button shape="circle" @click="handleClear">
@@ -13,7 +13,7 @@
             </Button>
             <Button shape="circle" type="primary" @click="handleClose">
                 <template #icon>
-                    <CloseOutlined />
+                    <FullscreenExitOutlined />
                 </template>
             </Button>
         </ButtonGroup>
@@ -23,9 +23,9 @@
 <script setup>
 import { Button } from 'ant-design-vue'
 import {
-    QuestionOutlined,
+    SettingOutlined,
     ClearOutlined,
-    CloseOutlined
+    FullscreenExitOutlined
 } from '@ant-design/icons-vue'
 
 const emit = defineEmits(['close', 'clear'])
