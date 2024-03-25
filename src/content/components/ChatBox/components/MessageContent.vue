@@ -93,6 +93,7 @@ const messageContent = computed(() => {
     max-width: 80%;
     border-radius: 10px;
     word-wrap: break-word;
+    white-space: pre-wrap;
 }
 
 .message-item-user {
