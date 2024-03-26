@@ -1,4 +1,4 @@
-export const ApiConfig = {
+export const SparkApiConfig = {
     spark3_5: {
         path: 'wss://spark-api.xf-yun.com/v3.5/chat',
         version: 'v3.5',

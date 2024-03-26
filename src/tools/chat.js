@@ -1,5 +1,5 @@
 import CryptoJS from 'crypto-js'
-import { ApiConfig } from '../api/config'
+import { SparkApiConfig } from '../api/config'
 import { genPromptText } from './genPromptText'
 
 const APPID = '3aa2ba1f'
@@ -7,8 +7,8 @@ const API_SECRET = 'ODZmNDFlODE4ZjEyNWNmYTBlMmE1MjMw'
 const API_KEY = '4b4fb8e0d97bac047ba5ca89dafadd81'
 
 // 链接配置
-const sparkUrl = ApiConfig.spark3_5.path
-const modelDomain = ApiConfig.spark3_5.domain
+const sparkUrl = SparkApiConfig.spark3_5.path
+const modelDomain = SparkApiConfig.spark3_5.domain
 const pathName = new URL(sparkUrl).pathname
 
 var total_res = ""
