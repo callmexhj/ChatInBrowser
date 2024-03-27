@@ -1,11 +1,14 @@
 <template>
     <div class="button-group-background">
         <ButtonGroup>
-            <Button shape="circle">
-                <template #icon>
-                    <QuestionOutlined />
-                </template>
-            </Button>
+            <!-- TODO： 自动打开popup -->
+            <Tooltip title="请点击插件图标进行设置">
+                <Button shape="circle">
+                    <template #icon>
+                        <SettingOutlined />
+                    </template>
+                </Button>
+            </Tooltip>
             <Button shape="circle" @click="handleClear">
                 <template #icon>
                     <ClearOutlined />
@@ -13,7 +16,7 @@
             </Button>
             <Button shape="circle" type="primary" @click="handleClose">
                 <template #icon>
-                    <CloseOutlined />
+                    <FullscreenExitOutlined />
                 </template>
             </Button>
         </ButtonGroup>
@@ -21,21 +24,24 @@
 </template>
 
 <script setup>
-import { Button } from 'ant-design-vue'
+import { Button, Tooltip } from 'ant-design-vue'
 import {
-    QuestionOutlined,
+    SettingOutlined,
     ClearOutlined,
-    CloseOutlined
+    FullscreenExitOutlined
 } from '@ant-design/icons-vue'
 
 const emit = defineEmits(['close', 'clear'])
 const ButtonGroup = Button.Group
+
 const handleClose = () => {
     emit('close')
 }
+
 const handleClear = () => {
     emit('clear')
 }
+
 </script>
 
 <style scoped>
@@ -45,7 +51,7 @@ const handleClear = () => {
     justify-content: flex-end;
     margin: 10px;
 }
-.button-group-background>>>.ant-btn-primary{
+.button-group-background :deep(.ant-btn-primary){
     box-shadow: none;
 }
 </style>
