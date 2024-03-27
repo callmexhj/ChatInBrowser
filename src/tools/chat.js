@@ -1,32 +1,44 @@
 import CryptoJS from 'crypto-js'
-import { SparkApiConfig } from '../api/config'
-import { genPromptText } from './genPromptText'
+import { ApiConfig } from '../api/config'
 
-const APPID = '3aa2ba1f'
-const API_SECRET = 'ODZmNDFlODE4ZjEyNWNmYTBlMmE1MjMw'
-const API_KEY = '4b4fb8e0d97bac047ba5ca89dafadd81'
+let APPID = null
+let API_SECRET = null
+let API_KEY = null
 
 // 链接配置
-const sparkUrl = SparkApiConfig.spark3_5.path
-const modelDomain = SparkApiConfig.spark3_5.domain
-const pathName = new URL(sparkUrl).pathname
+let sparkUrl = null
+let modelDomain = null
+let pathName = null
 
 var total_res = ""
 let ttsWS = null
+
+const initModel = (modelConfig) => {
+    APPID = modelConfig.appId
+    API_SECRET = modelConfig.apiSecret
+    API_KEY = modelConfig.apiKey
+    sparkUrl = modelConfig.path
+    modelDomain = modelConfig.domain
+    pathName = new URL(sparkUrl).pathname
+}
 async function result(resultData, sender) {
     const jsonData = JSON.parse(resultData)
+    // 提问失败
+    if (jsonData.header.code !== 0) {
+        const errorMessage = `${jsonData.header.code}:${jsonData.header.message}`
+        await chrome.tabs.sendMessage(sender.tab.id, {
+            action: 'configError',
+            data: errorMessage
+        })
+        return
+    }
+    console.log(jsonData)
     const { payload: { choices: { text } } } = jsonData
     const addText = text[text.length - 1].content
     chrome.tabs.sendMessage(sender.tab.id, {
-        action:'websocketMessage',
+        action: 'websocketMessage',
         data: addText
     })
-    // 提问失败
-    if (jsonData.header.code !== 0) {
-        console.log(`提问失败: ${jsonData.header.code}:${jsonData.header.message}`)
-        console.error(`${jsonData.header.code}:${jsonData.header.message}`)
-        return
-    }
     if (jsonData.header.code === 0 && jsonData.header.status === 2) {
         ttsWS.close()
     }
@@ -50,7 +62,8 @@ function getWebsocketUrl() {
     })
 }
 
-function connectWebSocket(messageArray, sender) {
+export const connectSparkWebSocket = (messageArray, sender, modelConfig) => {
+    initModel(modelConfig)
     return getWebsocketUrl().then(url => {
         ttsWS = new WebSocket(url)
         ttsWS.onopen = e => {
@@ -59,8 +72,12 @@ function connectWebSocket(messageArray, sender) {
         ttsWS.onmessage = e => {
             result(e.data, sender)
         }
-        ttsWS.onerror = e => {
+        ttsWS.onerror = async e => {
             console.log('WebSocket报错，请f12查看详情')
+            await chrome.tabs.sendMessage(sender.tab.id, {
+                action: 'configError',
+                data: 'WebSocket报错，请f12查看详情'
+            })
             console.error(`详情查看：${encodeURI(url.replace('wss:', 'https:'))}`)
         }
         ttsWS.onclose = e => {
@@ -93,20 +110,3 @@ function webSocketSend(messageArray) {
 function start() {
     total_res = ""; // 请空回答历史
 }
-chrome.runtime.onMessage.addListener(async ({ action, data }, sender, sendResponse) => {
-    if (action === 'search') {
-        const { messages, searchValue, copyValue } = data
-        if (messages.length === 0) {
-            messages.push({
-                role: "user",
-                content: genPromptText(searchValue, copyValue)
-            })
-        } else {
-            messages.push({
-                role: "user",
-                content: searchValue
-            })
-        }
-        await connectWebSocket(messages, sender)
-    }
-})

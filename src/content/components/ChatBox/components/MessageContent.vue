@@ -1,11 +1,15 @@
 <template>
     <div class="message-content">
-        <div class="messages" v-for="(message, index) in messages" :key="`${message.role}_${index}`" :class="messageStyle(message)">
-            <div class="message-item">
-                {{ messageContent(message, index) }}
-                <div v-if="message.role !== 'user'" class="icos">
-                    <img src="../../../images/copy.png" title="点击复制" @click="handleCopy(message)">
+        <div class="messages" v-for="(message, index) in messages" :key="`${message.role}_${index}`"
+            :class="messageStyle(message)">
+            <div class="message-item" v-if="message.role !== 'user'">
+                <div class="md-content" v-html="messageContent(message, index)"></div>
+                <div class="icos">
+                    <img src="@/content/images/copy.png" title="点击复制" @click="handleCopy(message)">
                 </div>
+            </div>
+            <div class="message-item" v-else>
+                {{ messageContent(message, index) }}
             </div>
         </div>
     </div>
@@ -14,6 +18,22 @@
 <script setup>
 import { computed } from 'vue'
 import { message } from 'ant-design-vue'
+import 'highlight.js/styles/vs2015.min.css'
+import MarkdownIt from 'markdown-it'
+import hljs from 'highlight.js'
+
+const md = new MarkdownIt({
+    highlight: function (str, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+            try {
+                return '<pre class="hljs"><code>' +
+                    hljs.highlight(lang, str, true).value +
+                    '</code></pre>';
+            } catch (__) { }
+        }
+        return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>'
+    }
+})
 
 const props = defineProps({
     messages: {
@@ -38,7 +58,6 @@ const handleCopy = (messageValue) => {
         textArea.focus()
         textArea.select()
         return new Promise((res, rej) => {
-            // 执行复制命令并移除文本框
             document.execCommand('copy') ? res() : rej()
             textArea.remove()
             message.success('复制成功')
@@ -48,19 +67,72 @@ const handleCopy = (messageValue) => {
 
 const messageStyle = computed(() => {
     return (message) => {
+        console.log(message)
         return message.role === 'user' ? 'message-item-user' : 'message-item-system'
     }
 })
 
+const markdownCompile = (messageValue) => {
+    return md.render(messageValue)
+}
+
 const messageContent = computed(() => {
     return (message, index) => {
-        return index === 0 ? props.firstSearchQuestion :  message.content
+        return index === 0
+            ? props.firstSearchQuestion
+            : message.role !== 'user'
+                ? markdownCompile(message.content)
+                : message.content
     }
 })
 
 </script>
 
 <style scoped>
+.md-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.message-item :deep(p),
+:deep(ol),
+:deep(ul) {
+    margin: 5px 0;
+}
+
+.message-item :deep(pre) {
+    overflow-x: auto;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+.message-item :deep(pre)::-webkit-scrollbar-track-piece {
+    -webkit-border-radius: 0
+}
+
+.message-item :deep(pre)::-webkit-scrollbar {
+    width: 5px;
+    height: 10px
+}
+
+.message-item :deep(pre)::-webkit-scrollbar-thumb {
+    height: 50px;
+    background-color: #b8b8b8;
+    -webkit-border-radius: 6px;
+    outline-offset: -2px;
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    -khtml-opacity: 0.5;
+    opacity: 0.5
+}
+
+.message-item :deep(pre)::-webkit-scrollbar-thumb:hover {
+    height: 50px;
+    background-color: #878987;
+    -webkit-border-radius: 6px
+}
+
 .message-content {
     width: 90%;
     height: 300px;
@@ -70,6 +142,7 @@ const messageContent = computed(() => {
     flex-direction: column;
     scrollbar-width: none;
 }
+
 .messages {
     display: flex;
     flex-direction: column;
@@ -82,7 +155,7 @@ const messageContent = computed(() => {
 }
 
 .icos img {
-    width: 15px;
+    width: 20px;
     margin: 5px 0 0;
     cursor: pointer;
 }

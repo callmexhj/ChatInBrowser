@@ -51,7 +51,7 @@ const handleClear = () => {
     justify-content: flex-end;
     margin: 10px;
 }
-.button-group-background>>>.ant-btn-primary{
+.button-group-background :deep(.ant-btn-primary){
     box-shadow: none;
 }
 </style>

@@ -47,7 +47,7 @@ defineExpose({
     justify-content: space-between;
     margin: 10px 0 20px 0;
 }
-.input-content>>>.ant-btn-primary{
+.input-content :deep(.ant-btn-primary){
     box-shadow: none;
 }
 .input-content-input {

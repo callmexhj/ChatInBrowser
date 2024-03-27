@@ -1,25 +1,13 @@
 <template>
-    <ConfigProvider
-        :theme="{
-            token: {
-                colorPrimary: colorPrimary
-            }
-        }"
-    >
-        <drag-ball
-        style="font-family: Arial 微软雅黑; font-size: 12px;"
-        ref="dragBallRef"
-        :isShowChatBox="isShowChatBox">
-            <chat-box
-                :isShowChatBox="isShowChatBox"
-                :colorPrimary="colorPrimary"
-                :copyValue="copyValue"
-                :messages="messages"
-                :firstSearchQuestion = "firstSearchQuestion"
-                @onShowChatBox="onShowChatBox"
-                @close="handleClose"
-                @clear="handleClear"
-                @search="handleSearch"/>
+    <ConfigProvider :theme="{
+        token: {
+            colorPrimary: colorPrimary
+        }
+    }">
+        <drag-ball style="font-family: Arial 微软雅黑; font-size: 12px;" ref="dragBallRef" :isShowChatBox="isShowChatBox">
+            <chat-box :isShowChatBox="isShowChatBox" :colorPrimary="colorPrimary" :copyValue="copyValue"
+                :messages="messages" :firstSearchQuestion="firstSearchQuestion" @onShowChatBox="onShowChatBox"
+                @close="handleClose" @clear="handleClear" @search="handleSearch" />
         </drag-ball>
     </ConfigProvider>
 </template>
@@ -28,7 +16,7 @@
 import { ref, onMounted, reactive } from 'vue';
 import DragBall from './components/DragBall/index.vue'
 import ChatBox from './components/ChatBox/index.vue'
-import { ConfigProvider, Modal } from 'ant-design-vue'
+import { ConfigProvider, Modal, message } from 'ant-design-vue'
 import { genPromptText } from '../tools/genPromptText'
 
 const dragBallRef = ref()
@@ -63,11 +51,14 @@ const messageListener = (request, sender, sendResponse) => {
                 cancelText: '取消',
                 onOk() {
                     handleClear()
+                    copyValue.value = request.data
+                    onShowChatBox()
                 }
             })
+        } else {
+            copyValue.value = request.data
+            onShowChatBox()
         }
-        copyValue.value = request.data
-        onShowChatBox()
     }
     if (request.action === 'websocketMessage') {
         if (request.data) {
@@ -78,6 +69,11 @@ const messageListener = (request, sender, sendResponse) => {
                 messages[messages.length - 1].content += request.data
             }
         }
+    }
+    if (request.action === 'configError') {
+        message.error(request.data)
+        messages[messages.length - 1].content = request.data
+        isWaitingWS = false
     }
 }
 
