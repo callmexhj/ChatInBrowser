@@ -98,6 +98,7 @@ const messageContent = computed(() => {
 :deep(ol),
 :deep(ul) {
     margin: 5px 0;
+    color: #262626;
 }
 
 .message-item :deep(pre) {

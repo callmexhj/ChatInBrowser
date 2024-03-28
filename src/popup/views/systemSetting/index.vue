@@ -19,11 +19,13 @@
 import { reactive, onMounted } from 'vue'
 import { Form, Select, message } from 'ant-design-vue'
 import { primaryColors } from '@/config/colorInfo'
+import { useSystemConfigStore } from '@/store/systemConfig'
 
 const AForm = Form
 const AFormItem = Form.Item
 const ASelect = Select
 const ASelectOption = Select.Option
+const store = useSystemConfigStore()
 
 let systemSetting = reactive({})
 
@@ -55,9 +57,16 @@ const colorOptions = reactive([...primaryColors])
 
 const handleColorChange = (value) => {
     systemSetting.primaryColor = value
+    store.primaryColor = value
     chrome.storage.local.set({
         systemSetting
     }, () => {
+        chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+            chrome.tabs.sendMessage(tabs[0].id, {
+                action: 'updatePrimaryColor',
+                data: value
+            })
+        })
         message.success('保存成功')
     })
 }
