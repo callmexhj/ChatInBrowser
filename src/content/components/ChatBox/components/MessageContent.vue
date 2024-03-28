@@ -156,7 +156,6 @@ const messageContent = computed(() => {
 
 .icos img {
     width: 20px;
-    margin: 5px 0 0;
     cursor: pointer;
 }
 

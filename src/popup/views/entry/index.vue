@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import Header from '../../components/Header/index.vue'
 import PageNavigator from '../../components/PageNavigator/index.vue'
 import { ConfigProvider } from 'ant-design-vue'
@@ -24,6 +24,18 @@ const pageMap = [
     '/more'
 ]
 const colorPrimary = ref('#135200')
+
+onMounted(() => {
+    setPrimaryColorFromChromeStorage()
+})
+
+const setPrimaryColorFromChromeStorage = () => {
+    chrome && chrome.storage.local.get('systemSetting', (result) => {
+        if (result.systemSetting) {
+            colorPrimary.value = result.systemSetting.primaryColor
+        }
+    })
+}
 
 const handlePageChange = (index) => {
     router.push(pageMap[index])
