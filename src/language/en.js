@@ -23,5 +23,25 @@ export const en = {
         more: {
             title: 'more'
         }
+    },
+    content: {
+        inputContent: {
+            placeholder: 'Shift + enter to send',
+            inputTip: 'Please enter search content'
+        },
+        messageContent: {
+            copyTitle: 'Click to copy',
+            copySuccessInfo: 'Copied successfully'
+        },
+        topButtonGroup: {
+            tooltipTitle: 'Please click the plug-in icon to set up'
+        },
+        defaultCopyValue: 'Web page text can be copied as search content',
+        clearConfirmModal: {
+            title: 'This operation will clear the history of ChatInBrowser, please confirm whether to continue.',
+            okText: 'Confirm',
+            cancelText: 'Cancel'
+        },
+        defaultAssistantMessage: 'Analyzing...'
     }
 }

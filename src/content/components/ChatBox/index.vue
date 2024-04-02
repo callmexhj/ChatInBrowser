@@ -19,7 +19,9 @@ import { ref, computed } from 'vue'
 import TopButtonGroup from './components/TopButtonGroup.vue'
 import MessageContent from './components/MessageContent.vue'
 import InputContent from './components/InputContent.vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const props = defineProps({
     isShowChatBox: {
         type: Boolean,
@@ -31,7 +33,7 @@ const props = defineProps({
     },
     copyValue: {
         type: String,
-        default: '请选中内容'
+        default: ''
     },
     messages: {
         type: Array,
@@ -69,7 +71,7 @@ const handleSearch = (value) => {
 }
 
 const displayValue = computed(() => {
-    return props.copyValue === '' ? '可复制网页文字作为搜索内容' : props.copyValue
+    return props.copyValue === '' ? t('content.defaultCopyValue') : props.copyValue
 })
 
 </script>

@@ -23,5 +23,25 @@ export const zh = {
         more: {
             title: '更多'
         }
+    },
+    content: {
+        inputContent: {
+            placeholder: '按shift+enter快捷发送',
+            inputTip: '请输入搜索内容'
+        },
+        messageContent: {
+            copyTitle: '点击复制',
+            copySuccessInfo: '复制成功'
+        },
+        topButtonGroup: {
+            tooltipTitle: '请点击插件图标进行设置'
+        },
+        defaultCopyValue: '可复制网页文字作为搜索内容',
+        clearConfirmModal: {
+            title: '此操作将清除ChatInBrowser的历史记录，请确认是否继续',
+            okText: '确认',
+            cancelText: '取消'
+        },
+        defaultAssistantMessage: '分析中...'
     }
 }

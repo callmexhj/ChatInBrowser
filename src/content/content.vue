@@ -19,7 +19,9 @@ import ChatBox from './components/ChatBox/index.vue'
 import { ConfigProvider, Modal, message } from 'ant-design-vue'
 import { genPromptText } from '../tools/genPromptText'
 import { useSystemConfigStore } from '@/store/systemConfig'
+import { useI18n } from 'vue-i18n'
 
+const { locale, t } = useI18n()
 const systemConfigStore = useSystemConfigStore()
 const dragBallRef = ref()
 const isShowChatBox = ref(false)
@@ -49,9 +51,9 @@ const messageListener = (request, sender, sendResponse) => {
         // TODO: 增加不再提醒的选项
         if (messages.length > 0) {
             Modal.confirm({
-                title: '此操作将清除ChatInBrowser的历史记录，请确认是否继续',
-                okText: '确认',
-                cancelText: '取消',
+                title: t('content.clearConfirmModal.title'),
+                okText: t('content.clearConfirmModal.okText'),
+                cancelText: t('content.clearConfirmModal.cancelText'),
                 onOk() {
                     handleClear()
                     copyValue.value = request.data
@@ -78,7 +80,7 @@ const messageListener = (request, sender, sendResponse) => {
         messages[messages.length - 1].content = request.data
         isWaitingWS = false
     }
-    if (request.action === 'updatePrimaryColor') {
+    if (request.action === 'updatePrimaryColor' || request.action === 'updateLanguage') {
         initSystemConfigByChromeStorage()
     }
 }
@@ -99,7 +101,7 @@ const handleSearch = (searchValue) => {
         content: messages.length > 1 ? searchValue : genPromptText(searchValue, copyValue.value)
     }, {
         role: 'assistant',
-        content: '分析中...'
+        content: t('content.defaultAssistantMessage')
     })
 }
 
@@ -111,6 +113,8 @@ const initSystemConfigByChromeStorage = () => {
     chrome && chrome.storage.local.get('systemSetting', (res) => {
         if (res.systemSetting) {
             systemConfigStore.setPrimaryColor(res.systemSetting.primaryColor)
+            systemConfigStore.setLanguage(res.systemSetting.language)
+            locale.value = res.systemSetting.language
         }
     })
 }

@@ -1,6 +1,6 @@
 <template>
     <div class="input-content">
-        <TextArea class="input-content-input" v-model:value="userInput" :autofocus="true" placeholder="按shift+enter快捷发送" auto-size @keydown="handleKeyDown"  />
+        <TextArea class="input-content-input" v-model:value="userInput" :autofocus="true" :placeholder="t('content.inputContent.placeholder')" auto-size @keydown="handleKeyDown"  />
         <Button shape="circle" type="primary" @click="handleClick">
             <template #icon>
                 <MessageOutlined />
@@ -13,13 +13,15 @@
 import { ref } from 'vue'
 import { Input, Button, message } from 'ant-design-vue'
 import { MessageOutlined } from '@ant-design/icons-vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const TextArea  = Input.TextArea
 const emit = defineEmits(['search'])
 const userInput = ref('')
 
 const handleClick = () => {
-    if (userInput.value.length === 0) return message.warning('请输入搜索内容')
+    if (userInput.value.length === 0) return message.warning(t('content.inputContent.inputTip'))
     emit('search', userInput.value)
 }
 
