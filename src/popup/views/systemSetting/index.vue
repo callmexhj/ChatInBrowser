@@ -1,7 +1,7 @@
 <template>
     <div class="system-setting">
         <a-form :model="systemForm" layout="vertical" autocomplete="off">
-            <a-form-item label="Primary Color" name="primaryColor">
+            <a-form-item :label="t('popup.system.primaryColor.title')" name="primaryColor">
                 <a-select v-model:value="systemForm.primaryColor" @change="handleColorChange">
                     <a-select-option v-for="item in colorOptions" :value="item.value">
                         <div class="color-item">
@@ -11,16 +11,24 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
+            <a-form-item :label="t('popup.system.language.title')" name="language">
+                <RadioGroup v-model:value="systemForm.language" button-style="solid">
+                    <RadioButton value="zh">中文</RadioButton>
+                    <RadioButton value="en">English</RadioButton>
+                </RadioGroup>
+            </a-form-item>
         </a-form>
     </div>
 </template>
 
 <script setup>
-import { reactive, onMounted } from 'vue'
-import { Form, Select, message } from 'ant-design-vue'
+import { reactive, onMounted, watch } from 'vue'
+import { Form, Select, message, RadioGroup, RadioButton } from 'ant-design-vue'
 import { primaryColors } from '@/config/colorInfo'
 import { useSystemConfigStore } from '@/store/systemConfig'
+import { useI18n } from 'vue-i18n'
 
+const { t, locale } = useI18n()
 const AForm = Form
 const AFormItem = Form.Item
 const ASelect = Select
@@ -30,7 +38,8 @@ const store = useSystemConfigStore()
 let systemSetting = reactive({})
 
 const systemForm = reactive({
-    primaryColor: '#135200'
+    primaryColor: store.primaryColor,
+    language: store.language
 })
 
 onMounted(() => {
@@ -38,19 +47,7 @@ onMounted(() => {
 })
 
 const readChromeStorage = () => {
-    chrome.storage.local.get('systemSetting', (res) => {
-        if (res.systemSetting) {
-            systemSetting = res.systemSetting
-            systemForm.primaryColor = systemSetting.primaryColor
-        }
-        else {
-            chrome.storage.local.set({
-                systemSetting: {}
-            }, () => {
-                console.log('systemSetting is empty, set default')
-            })
-        }
-    })
+    systemSetting = { ...systemForm }
 }
 
 const colorOptions = reactive([...primaryColors])
@@ -61,15 +58,34 @@ const handleColorChange = (value) => {
     chrome.storage.local.set({
         systemSetting
     }, () => {
-        chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.tabs.sendMessage(tabs[0].id, {
                 action: 'updatePrimaryColor',
                 data: value
             })
         })
-        message.success('保存成功')
+        message.success(t('popup.system.primaryColor.changeInfo'))
     })
 }
+
+watch(() => systemForm.language, (newValue, oldValue) => {
+    if (oldValue !== undefined) {
+        systemSetting.language = newValue
+        store.setLanguage(newValue)
+        chrome.storage.local.set({
+            systemSetting
+        }, () => {
+            locale.value = newValue
+            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+                chrome.tabs.sendMessage(tabs[0].id, {
+                    action: 'updateLanguage',
+                    data: newValue
+                })
+            })
+            message.success(t('popup.system.language.changeInfo'))
+        })
+    }
+})
 
 </script>
 

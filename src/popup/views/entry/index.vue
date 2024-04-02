@@ -17,7 +17,9 @@ import PageNavigator from '../../components/PageNavigator/index.vue'
 import { ConfigProvider } from 'ant-design-vue'
 import { useRouter } from 'vue-router'
 import { useSystemConfigStore } from '@/store/systemConfig'
+import { useI18n } from 'vue-i18n'
 
+const { locale } = useI18n()
 const store = useSystemConfigStore()
 const router = useRouter()
 const pageMap = [
@@ -27,13 +29,25 @@ const pageMap = [
 ]
 
 onMounted(() => {
-    setPrimaryColorFromChromeStorage()
+    setSystemConfigFromChromeStorage()
 })
 
-const setPrimaryColorFromChromeStorage = () => {
+const setSystemConfigFromChromeStorage = () => {
     chrome && chrome.storage.local.get('systemSetting', (result) => {
         if (result.systemSetting) {
-            store.primaryColor = result.systemSetting.primaryColor
+            store.setPrimaryColor(result.systemSetting.primaryColor)
+            store.setLanguage(result.systemSetting.language)
+            locale.value = result.systemSetting.language
+        }
+        else {
+            chrome.storage.local.set({
+                systemSetting: {
+                    primaryColor: '#262626',
+                    language: 'zh'
+                }
+            }, () => {
+                setSystemConfigFromChromeStorage()
+            })
         }
     })
 }
