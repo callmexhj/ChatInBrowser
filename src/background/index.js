@@ -1,5 +1,6 @@
-import { connectSparkWebSocket } from '@/tools/chat'
+import { connectSparkWebSocket } from '@/tools/sparkchat'
 import { genPromptText } from '@/tools/genPromptText'
+import { chatFunc } from '@/tools/openaichat'
 
 const checkModelConfig = () => {
     return new Promise((resolve, reject) => {
@@ -20,7 +21,6 @@ chrome.contextMenus.create({
     contexts: ['selection']
 })
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
-    console.log(info)
     if (info.menuItemId === "search") {
         await chrome.tabs.sendMessage(tab.id, {
             action: 'userCopy',
@@ -46,10 +46,11 @@ chrome.runtime.onMessage.addListener(async ({ action, data }, sender, sendRespon
                 })
             }
             if (modelConfig.model === 'SparkApi') {
-                await connectSparkWebSocket(messages, sender, modelConfig)
+                await connectSparkWebSocket(messages, sender, modelConfig.sparkModelConfig)
+            } else if (modelConfig.model === 'OpenAI') {
+                await chatFunc(messages, sender, modelConfig.openAiModelConfig)
             }
         } catch (error) {
-            console.log(error)
             await chrome.tabs.sendMessage(sender.tab.id, {
                 action: 'configError',
                 data: error

@@ -46,7 +46,6 @@ const handleClear = () => {
 }
 
 const messageListener = (request, sender, sendResponse) => {
-    console.log(request)
     if (request.action === 'userCopy') {
         // TODO: 增加不再提醒的选项
         if (messages.length > 0) {

@@ -22,5 +22,15 @@ export const modelOptions = [
           label: 'v3.5'
         }
       ]
+    },
+    {
+      value: 'OpenAI',
+      label: 'OpenAI',
+      children: [
+        {
+          value: ApiConfig.gpt35_turbo.name,
+          label: 'gpt-3.5-turbo'
+        }
+      ]
     }
   ]
