@@ -21,7 +21,17 @@ export const en = {
             }
         },
         more: {
-            title: 'more'
+            title: 'more',
+            buttons: {
+                aboutExt: 'About project',
+                projectHome: 'Project home page',
+                createIssue: 'Improve together'
+            },
+            modalInfo: {
+                title: 'About project',
+                content: 'If you like this extension, you can consider going to the Gitgub homepage and clicking star to support me.',
+                okText: 'Got it'
+            }
         }
     },
     content: {

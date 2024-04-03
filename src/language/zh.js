@@ -21,7 +21,17 @@ export const zh = {
             }
         },
         more: {
-            title: '更多'
+            title: '更多',
+            buttons: {
+                aboutExt: '关于项目',
+                projectHome: '项目主页',
+                createIssue: '一起改进'
+            },
+            modalInfo: {
+                title: '关于项目',
+                content: '如果您喜欢这个插件，请前往Gitgub主页点击star支持我吧',
+                okText: '知道了'
+            }
         }
     },
     content: {
