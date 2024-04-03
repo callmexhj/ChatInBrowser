@@ -70,7 +70,6 @@ const handleCopy = (messageValue) => {
 
 const messageStyle = computed(() => {
     return (message) => {
-        console.log(message)
         return message.role === 'user' ? 'message-item-user' : 'message-item-system'
     }
 })

@@ -1,91 +1,124 @@
 <template>
   <div class="home">
     <div class="content">
-      <a-form :model="modelForm" layout="vertical" @finish="handleFinish" autocomplete="off">
-        <a-form-item label="Model" name="modelVersion" :rules="[{ required: true, message: 'Please choose your Model' }]">
-          <Cascader v-model:value="modelForm.modelVersion" :options="modelOptions" :placeholder="t('popup.model.placeholder.model')" />
-        </a-form-item>
-        <a-form-item label="APPID" name="appId" :rules="[{ required: true, message: t('popup.model.placeholder.others', ['APPID']) }]">
-          <Input v-model:value="modelForm.appId" :placeholder="t('popup.model.placeholder.others', ['APPID'])" />
-        </a-form-item>
-        <a-form-item label="API_SECRET" name="apiSecret" :rules="[{ required: true, message: t('popup.model.placeholder.others', ['API_SECRET']) }]">
-          <Input v-model:value="modelForm.apiSecret" :placeholder="t('popup.model.placeholder.others', ['API_SECRET'])" />
-        </a-form-item>
-        <a-form-item label="API_KEY" name="apiKey" :rules="[{ required: true, message: t('popup.model.placeholder.others', ['API_KEY']) }]">
-          <Input v-model:value="modelForm.apiKey" :placeholder="t('popup.model.placeholder.others', ['API_KEY'])" />
-        </a-form-item>
-        <a-form-item :wrapper-col="{ flex: 1 }">
-          <Button type="primary" html-type="submit" class="submit-button">{{ t('popup.model.saveButton') }}</Button>
+      <a-form layout="vertical">
+        <a-form-item label="Model">
+          <Cascader :allowClear="false" v-model:value="modelVersion" :options="modelOptions"
+            :placeholder="t('popup.model.placeholder.model')" />
         </a-form-item>
       </a-form>
+      <spark-form v-if="modelVersion.length > 0 && modelVersion[0] === 'SparkApi'" :modelConfig="sparkModelConfigForm"
+        @finish="handleSparkConfigFinish" />
+      <OpenAiForm v-if="modelVersion.length > 0 && modelVersion[0] === 'OpenAI'" :modelConfig="openAiModelConfigForm"
+        @finish="handleOpenAiConfigFinish" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { reactive, onMounted } from 'vue'
-import { Form, Input, Cascader, Button, message } from 'ant-design-vue'
-import { modelOptions } from '../../../config/modelInfo'
+import { reactive, onMounted, watch, ref } from 'vue'
+import { message, Cascader, Form } from 'ant-design-vue'
 import { ApiConfig } from '@/api/config'
 import { useI18n } from 'vue-i18n'
+import { modelOptions } from '@/config/modelInfo'
+import SparkForm from './components/SparkForm.vue'
+import OpenAiForm from './components/OpenAiForm.vue'
 
 const { t } = useI18n()
 const AForm = Form
 const AFormItem = Form.Item
 
-const modelForm = reactive({
-  modelVersion: null,
+let modelConfigCache = null
+const modelVersion = ref(['SparkApi', 'spark3_5'])
+const sparkModelConfigForm = reactive({
   appId: '',
   apiSecret: '',
   apiKey: ''
 })
 
-onMounted(() => {
-  chrome.storage.local.get(['modelConfig'], (result) => {
-    console.log(result.modelConfig)
-    const { modelConfig } = result
-    if (modelConfig) {
-      const { model, modelName, appId, apiSecret, apiKey } = modelConfig
-      modelForm.modelVersion = [model, modelName]
-      modelForm.appId = appId
-      modelForm.apiSecret = apiSecret
-      modelForm.apiKey = apiKey
-    }
-  })
+const openAiModelConfigForm = reactive({
+  apiKey: ''
 })
 
-const handleFinish = (values) => {
-  const { modelVersion: [model, modelName], apiKey, apiSecret, appId } = values
+const initModelConfig = () => {
+  chrome.storage.local.get(['modelConfig'], (result) => {
+    const { modelConfig } = result
+    if (modelConfig) {
+      modelConfigCache = modelConfig
+      const { model, modelName, sparkModelConfig, openAiModelConfig } = modelConfig
+      modelVersion.value = [model, modelName]
+      sparkModelConfigForm.appId = sparkModelConfig?.appId
+      sparkModelConfigForm.apiSecret = sparkModelConfig?.apiSecret
+      sparkModelConfigForm.apiKey = sparkModelConfig?.apiKey
+      openAiModelConfigForm.apiKey = openAiModelConfig?.apiKey
+    } else {
+      modelConfigCache = {
+        model: 'SparkApi',
+        modelName: 'spark3_5',
+        sparkModelConfig: null,
+        openAiModelConfig: null
+      }
+    }
+  })
+}
+
+onMounted(() => {
+  initModelConfig()
+})
+
+watch(modelVersion, (newValue) => {
+  const [model, modelName] = newValue
+  modelConfigCache.model = model
+  modelConfigCache.modelName = modelName
+})
+
+const handleSparkConfigFinish = (values) => {
+  const { apiKey, apiSecret, appId } = values
+  const modelName = modelVersion.value[1]
   if (ApiConfig[modelName]) {
     const { path, domain } = ApiConfig[modelName]
-    const modelConfig = {
-      model,
-      modelName,
+    sparkModelConfigForm.appId = appId
+    sparkModelConfigForm.apiSecret = apiSecret
+    sparkModelConfigForm.apiKey = apiKey
+    const sparkModelConfig = {
       path,
       domain,
       appId,
       apiKey,
       apiSecret
     }
+    modelConfigCache.sparkModelConfig = { ...sparkModelConfig }
     chrome.storage.local.set({
-      modelConfig
+      modelConfig: modelConfigCache
     }, () => {
       message.success(t('popup.model.changeInfo'))
     })
   }
 }
 
+const handleOpenAiConfigFinish = (values) => {
+  const { apiKey } = values
+  openAiModelConfigForm.apiKey = apiKey
+  const openAiModelConfig = {
+    apiKey
+  }
+  modelConfigCache.openAiModelConfig = { ...openAiModelConfig }
+  chrome.storage.local.set({
+    modelConfig: modelConfigCache
+  }, () => {
+    message.success(t('popup.model.changeInfo'))
+  })
+}
+
 </script>
 
 <style scoped>
 @import '@/commonStyles/scrollBar.css';
+
 .content {
   padding: 0 10px 0 0;
   margin: 10px;
   height: 430px;
   overflow: auto;
-}
-.submit-button {
-  width: 100%;
 }
 </style>

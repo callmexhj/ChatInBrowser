@@ -22,5 +22,11 @@ export const ApiConfig = {
         path: 'wss://spark-api.xf-yun.com/v1.1/chat',
         version: 'v1.5',
         domain: 'general'
+    },
+    gpt35_turbo: {
+        name: 'gpt-3.5-turbo',
+        path: 'empty',
+        version: 'empty',
+        domain: 'empty'
     }
 }

@@ -1,5 +1,4 @@
 import CryptoJS from 'crypto-js'
-import { ApiConfig } from '../api/config'
 
 let APPID = null
 let API_SECRET = null
@@ -10,7 +9,6 @@ let sparkUrl = null
 let modelDomain = null
 let pathName = null
 
-var total_res = ""
 let ttsWS = null
 
 const initModel = (modelConfig) => {
@@ -32,7 +30,6 @@ async function result(resultData, sender) {
         })
         return
     }
-    console.log(jsonData)
     const { payload: { choices: { text } } } = jsonData
     const addText = text[text.length - 1].content
     chrome.tabs.sendMessage(sender.tab.id, {
@@ -73,10 +70,10 @@ export const connectSparkWebSocket = (messageArray, sender, modelConfig) => {
             result(e.data, sender)
         }
         ttsWS.onerror = async e => {
-            console.log('WebSocket报错，请f12查看详情')
+            console.log('WebSocket报错，请在service work控制台查看详情')
             await chrome.tabs.sendMessage(sender.tab.id, {
                 action: 'configError',
-                data: 'WebSocket报错，请f12查看详情'
+                data: 'WebSocket报错，请在service work控制台查看详情'
             })
             console.error(`详情查看：${encodeURI(url.replace('wss:', 'https:'))}`)
         }
@@ -103,10 +100,5 @@ function webSocketSend(messageArray) {
             }
         }
     }
-    console.log(params)
     ttsWS.send(JSON.stringify(params))
-}
-
-function start() {
-    total_res = ""; // 请空回答历史
 }
