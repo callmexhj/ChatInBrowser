@@ -1,11 +1,11 @@
 <template>
     <ConfigProvider :theme="{
         token: {
-            colorPrimary: colorPrimary
+            colorPrimary: primaryColor
         }
     }">
         <drag-ball style="font-family: Arial 微软雅黑; font-size: 12px;" ref="dragBallRef" :isShowChatBox="isShowChatBox">
-            <chat-box :isShowChatBox="isShowChatBox" :colorPrimary="colorPrimary" :copyValue="copyValue"
+            <chat-box :isShowChatBox="isShowChatBox" :colorPrimary="primaryColor" :copyValue="copyValue"
                 :messages="messages" :firstSearchQuestion="firstSearchQuestion" @onShowChatBox="onShowChatBox"
                 @close="handleClose" @clear="handleClear" @search="handleSearch" />
         </drag-ball>
@@ -13,12 +13,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive, computed } from 'vue';
 import DragBall from './components/DragBall/index.vue'
 import ChatBox from './components/ChatBox/index.vue'
 import { ConfigProvider, Modal, message } from 'ant-design-vue'
 import { genPromptText } from '../tools/genPromptText'
+import { useSystemConfigStore } from '@/store/systemConfig'
+import { useI18n } from 'vue-i18n'
 
+const { locale, t } = useI18n()
+const systemConfigStore = useSystemConfigStore()
 const dragBallRef = ref()
 const isShowChatBox = ref(false)
 const colorPrimary = ref('#820014')
@@ -42,13 +46,14 @@ const handleClear = () => {
 }
 
 const messageListener = (request, sender, sendResponse) => {
+    console.log(request)
     if (request.action === 'userCopy') {
         // TODO: 增加不再提醒的选项
         if (messages.length > 0) {
             Modal.confirm({
-                title: '此操作将清除ChatInBrowser的历史记录，请确认是否继续',
-                okText: '确认',
-                cancelText: '取消',
+                title: t('content.clearConfirmModal.title'),
+                okText: t('content.clearConfirmModal.okText'),
+                cancelText: t('content.clearConfirmModal.cancelText'),
                 onOk() {
                     handleClear()
                     copyValue.value = request.data
@@ -75,6 +80,9 @@ const messageListener = (request, sender, sendResponse) => {
         messages[messages.length - 1].content = request.data
         isWaitingWS = false
     }
+    if (request.action === 'updatePrimaryColor' || request.action === 'updateLanguage') {
+        initSystemConfigByChromeStorage()
+    }
 }
 
 const handleSearch = (searchValue) => {
@@ -93,12 +101,27 @@ const handleSearch = (searchValue) => {
         content: messages.length > 1 ? searchValue : genPromptText(searchValue, copyValue.value)
     }, {
         role: 'assistant',
-        content: '分析中...'
+        content: t('content.defaultAssistantMessage')
+    })
+}
+
+const primaryColor = computed(() => {
+    return systemConfigStore.primaryColor
+})
+
+const initSystemConfigByChromeStorage = () => {
+    chrome && chrome.storage.local.get('systemSetting', (res) => {
+        if (res.systemSetting) {
+            systemConfigStore.setPrimaryColor(res.systemSetting.primaryColor)
+            systemConfigStore.setLanguage(res.systemSetting.language)
+            locale.value = res.systemSetting.language
+        }
     })
 }
 
 onMounted(() => {
     chrome.runtime.onMessage.addListener(messageListener)
+    initSystemConfigByChromeStorage()
 })
 
 </script>

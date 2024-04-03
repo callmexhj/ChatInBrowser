@@ -2,7 +2,7 @@
     <div class="button-group-background">
         <ButtonGroup>
             <!-- TODO： 自动打开popup -->
-            <Tooltip title="请点击插件图标进行设置">
+            <Tooltip :title="t('content.topButtonGroup.tooltipTitle')">
                 <Button shape="circle">
                     <template #icon>
                         <SettingOutlined />
@@ -30,7 +30,9 @@ import {
     ClearOutlined,
     FullscreenExitOutlined
 } from '@ant-design/icons-vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const emit = defineEmits(['close', 'clear'])
 const ButtonGroup = Button.Group
 

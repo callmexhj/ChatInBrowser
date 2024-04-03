@@ -5,7 +5,7 @@
             <div class="message-item" v-if="message.role !== 'user'">
                 <div class="md-content" v-html="messageContent(message, index)"></div>
                 <div class="icos">
-                    <img src="@/content/images/copy.png" title="点击复制" @click="handleCopy(message)">
+                    <img src="@/content/images/copy.png" :title="t('content.messageContent.copyTitle')" @click="handleCopy(message)">
                 </div>
             </div>
             <div class="message-item" v-else>
@@ -21,6 +21,9 @@ import { message } from 'ant-design-vue'
 import 'highlight.js/styles/vs2015.min.css'
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const md = new MarkdownIt({
     highlight: function (str, lang) {
@@ -48,7 +51,7 @@ const props = defineProps({
 
 const handleCopy = (messageValue) => {
     if (navigator.clipboard && window.isSecureContext) {
-        message.success('复制成功')
+        message.success(t('content.messageContent.copySuccessInfo'))
         return navigator.clipboard.writeText(messageValue.content)
     } else {
         let textArea = document.createElement("textarea")
@@ -60,7 +63,7 @@ const handleCopy = (messageValue) => {
         return new Promise((res, rej) => {
             document.execCommand('copy') ? res() : rej()
             textArea.remove()
-            message.success('复制成功')
+            message.success(t('content.messageContent.copySuccessInfo'))
         })
     }
 }
@@ -98,6 +101,7 @@ const messageContent = computed(() => {
 :deep(ol),
 :deep(ul) {
     margin: 5px 0;
+    color: #262626;
 }
 
 .message-item :deep(pre) {
@@ -156,7 +160,6 @@ const messageContent = computed(() => {
 
 .icos img {
     width: 20px;
-    margin: 5px 0 0;
     cursor: pointer;
 }
 

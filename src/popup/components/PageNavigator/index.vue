@@ -2,15 +2,15 @@
     <div class="page-navigator">
         <div class="nav-bar" @click="handleCheck(0)">
             <CommentOutlined :style="{ fontSize: '16px', color: checkedStyle(0) }" />
-            <span :style="{ color: checkedStyle(0) }">模型设置</span>
+            <span :style="{ color: checkedStyle(0) }">{{ $t('popup.model.title') }}</span>
         </div>
         <div class="nav-bar" @click="handleCheck(1)">
             <ControlOutlined :style="{ fontSize: '16px', color: checkedStyle(1) }" />
-            <span :style="{ color: checkedStyle(1) }">系统设置</span>
+            <span :style="{ color: checkedStyle(1) }">{{ $t('popup.system.title') }}</span>
         </div>
         <div class="nav-bar" @click="handleCheck(2)">
             <InfoCircleOutlined :style="{ fontSize: '16px', color: checkedStyle(2) }" />
-            <span :style="{ color: checkedStyle(2) }">更多</span>
+            <span :style="{ color: checkedStyle(2) }">{{ $t('popup.more.title') }}</span>
         </div>
     </div>
 </template>
