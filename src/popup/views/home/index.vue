@@ -29,7 +29,7 @@ const AForm = Form
 const AFormItem = Form.Item
 
 let modelConfigCache = null
-const modelVersion = ref(['SparkApi', 'spark3_5'])
+const modelVersion = ref([])
 const sparkModelConfigForm = reactive({
   appId: '',
   apiSecret: '',
@@ -51,6 +51,7 @@ const initModelConfig = () => {
       sparkModelConfigForm.apiSecret = sparkModelConfig?.apiSecret
       sparkModelConfigForm.apiKey = sparkModelConfig?.apiKey
       openAiModelConfigForm.apiKey = openAiModelConfig?.apiKey
+      console.log(sparkModelConfigForm, openAiModelConfigForm)
     } else {
       modelConfigCache = {
         model: 'SparkApi',

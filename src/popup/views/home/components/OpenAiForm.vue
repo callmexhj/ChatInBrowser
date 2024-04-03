@@ -30,7 +30,9 @@ const modelForm = ref({
 
 onMounted(() => {
     if (props.modelConfig) {
-        modelForm.value = { ...props.modelConfig }
+        modelForm.value = {
+            apiKey: props.modelConfig.apiKey
+        }
     }
 })
 

@@ -4,12 +4,13 @@ export const chatFunc = async (messages, sender, openAiModelConfig) => {
     try {
         const openai = new OpenAI({
             apiKey: openAiModelConfig.apiKey,
-            dangerouslyAllowBrowser: true
+            dangerouslyAllowBrowser: true,
+            timeout: 5000
         })
         const completion = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
             messages,
-            stream: true,
+            stream: true
         })
         for await (const chunk of completion) {
             if (chunk.choices) {
