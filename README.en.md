@@ -85,3 +85,6 @@ After completing the model configuration, you can use the model.
 
 ## Let's Optimize This Project Together
 Welcome everyone to raise issues or submit code to improve this project!
+
+## Update Log
+2024-4-7: Added support for DIY floating ball appearance.
