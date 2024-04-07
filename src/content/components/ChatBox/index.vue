@@ -1,6 +1,6 @@
 <template>
     <div class="chat-box">
-        <div class="default-button" v-if="!isShowChatBox" @mousedown="handhowMouseDown" @mouseup="showChatBox"></div>
+        <div class="default-button" :style="floatBallStyle" v-if="!isShowChatBox" @mousedown="handhowMouseDown" @mouseup="showChatBox"></div>
         <div class="chat-box-content" :style="{ backgroundColor: `${colorPrimary}a0` }" v-else>
             <div class="content-top">
                 <top-button-group @close="handleClose" @clear="handleClear" />
@@ -20,7 +20,9 @@ import TopButtonGroup from './components/TopButtonGroup.vue'
 import MessageContent from './components/MessageContent.vue'
 import InputContent from './components/InputContent.vue'
 import { useI18n } from 'vue-i18n'
+import { useSystemConfigStore } from '@/store/systemConfig'
 
+const { floatIco } = useSystemConfigStore()
 const { t } = useI18n()
 const props = defineProps({
     isShowChatBox: {
@@ -74,6 +76,23 @@ const displayValue = computed(() => {
     return props.copyValue === '' ? t('content.defaultCopyValue') : props.copyValue
 })
 
+const floatBallStyle = computed(() => {
+    const style = {
+        opacity: floatIco.opt / 100
+    }
+    if (floatIco?.mode === 'color' && floatIco.color) style.background = floatIco.color
+    if (floatIco?.mode === 'picture' && floatIco.img) {
+        style.backgroundImage = `url(${floatIco.img})`
+        style.backgroundSize = 'contain'
+        style.backgroundOrigin = 'content-box'
+        style.backgroundRepeat = 'no-repeat'
+        style.padding = '5px'
+        style.width = '45px'
+        style.height = '45px'
+    }
+    return { ...style }
+})
+
 </script>
 
 <style scoped>
@@ -85,7 +104,6 @@ const displayValue = computed(() => {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: lightblue;
     cursor: pointer;
 }
 

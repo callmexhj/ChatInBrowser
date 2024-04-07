@@ -37,13 +37,20 @@ const setSystemConfigFromChromeStorage = () => {
         if (result.systemSetting) {
             store.setPrimaryColor(result.systemSetting.primaryColor)
             store.setLanguage(result.systemSetting.language)
+            store.setFloatIco(result.systemSetting.floatIco)
             locale.value = result.systemSetting.language
         }
         else {
             chrome.storage.local.set({
                 systemSetting: {
                     primaryColor: '#262626',
-                    language: 'zh'
+                    language: 'zh',
+                    floatIco: {
+                        opt: 100,
+                        mode: 'color',
+                        color: '#5b8c00',
+                        img: ''
+                    }
                 }
             }, () => {
                 setSystemConfigFromChromeStorage()

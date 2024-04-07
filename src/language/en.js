@@ -20,7 +20,21 @@ export const en = {
                 changeInfo: 'Saved successfully'
             },
             icoColor: {
-                title: 'Floating Ball Color',
+                title: 'Floating Ball Setting',
+                changeInfo: 'Saved successfully',
+                optTitle: 'Opacity',
+                demoTitle: 'Floating Ball Preview',
+                colorMode: {
+                    title: 'Hex Color',
+                    placeholder: 'Example: #292929'
+                },
+                pictureMode: {
+                    button: 'Select Image'
+                },
+                icoModeRadio: {
+                    colorMode: 'Color Mode',
+                    pictureMode: 'Picture Mode'
+                },
                 changeInfo: 'Saved successfully'
             }
         },
