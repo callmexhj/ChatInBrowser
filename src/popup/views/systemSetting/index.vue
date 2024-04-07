@@ -17,12 +17,14 @@
                     <RadioButton value="en">English</RadioButton>
                 </RadioGroup>
             </a-form-item>
+            <a-form-item :label="t('popup.system.icoColor.title')" name="language">
+            </a-form-item>
         </a-form>
     </div>
 </template>
 
 <script setup>
-import { reactive, onMounted, watch } from 'vue'
+import { reactive, onMounted, watch, ref } from 'vue'
 import { Form, Select, message, RadioGroup, RadioButton } from 'ant-design-vue'
 import { primaryColors } from '@/config/colorInfo'
 import { useSystemConfigStore } from '@/store/systemConfig'

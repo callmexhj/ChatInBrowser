@@ -18,6 +18,10 @@ export const en = {
             language: {
                 title: 'Language',
                 changeInfo: 'Saved successfully'
+            },
+            icoColor: {
+                title: 'Floating Ball Color',
+                changeInfo: 'Saved successfully'
             }
         },
         more: {

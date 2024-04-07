@@ -18,6 +18,10 @@ export const zh = {
             language: {
                 title: '语言',
                 changeInfo: '语言保存成功'
+            },
+            icoColor: {
+                title: '悬浮球颜色',
+                changeInfo: '悬浮球颜色保存成功'
             }
         },
         more: {
