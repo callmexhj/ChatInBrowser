@@ -77,3 +77,6 @@ git clone https://github.com/callmexhj/ChatInBrowser.git
 
 ## 一起优化这个项目
 欢迎大家提出ISSUE或者提交代码来改进这个项目！
+
+## 更新记录
+2024-4-7 支持DIY悬浮球外观

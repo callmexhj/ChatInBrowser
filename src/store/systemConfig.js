@@ -4,7 +4,13 @@ export const useSystemConfigStore = defineStore('systemConfig', {
     state: () => {
         return {
             primaryColor: '',
-            language: ''
+            language: '',
+            floatIco: {
+                opt: '',
+                mode: '',
+                color: '',
+                img: ''
+            }
         }
     },
     actions: {
@@ -13,6 +19,24 @@ export const useSystemConfigStore = defineStore('systemConfig', {
         },
         setLanguage(language) {
             this.language = language
+        },
+        setFloatIco({ mode, color, img, opt }) {
+            this.floatIco.mode = mode
+            this.floatIco.color = color
+            this.floatIco.img = img
+            this.floatIco.opt = opt
+        },
+        setFloatIcoMode(mode) {
+            this.floatIco.mode = mode
+        },
+        setFloatIcoColor(color) {
+            this.floatIco.color = color
+        },
+        setFloatIcoImg(img) {
+            this.floatIco.img = img
+        },
+        setFloatIcoOpt(opt) {
+            this.floatIco.opt = opt
         }
     }
 })

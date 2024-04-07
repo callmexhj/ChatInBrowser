@@ -18,6 +18,24 @@ export const zh = {
             language: {
                 title: '语言',
                 changeInfo: '语言保存成功'
+            },
+            icoColor: {
+                title: '悬浮球设置',
+                changeInfo: '悬浮球保存成功',
+                optTitle: '透明度',
+                demoTitle: '悬浮球预览',
+                colorMode: {
+                    title: '十六进制颜色',
+                    placeholder: '例如：#292929'
+                },
+                pictureMode: {
+                    button: '选择图片'
+                },
+                icoModeRadio: {
+                    colorMode: '纯色模式',
+                    pictureMode: '图片模式'
+                },
+                changeInfo: '悬浮球保存成功'
             }
         },
         more: {

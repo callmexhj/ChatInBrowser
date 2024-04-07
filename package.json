@@ -20,6 +20,7 @@
     "pinia": "^2.1.7",
     "unplugin-vue-components": "^0.26.0",
     "vue": "^3.4.21",
+    "vue-color": "^2.8.1",
     "vue-i18n": "^9.10.2",
     "vue-router": "^4.3.0"
   },

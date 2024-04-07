@@ -23,22 +23,16 @@ import { useI18n } from 'vue-i18n'
 import { modelOptions } from '@/config/modelInfo'
 import SparkForm from './components/SparkForm.vue'
 import OpenAiForm from './components/OpenAiForm.vue'
+import { usePopupSystemSettingHome } from '@/store/popupSystemSettingHome'
 
+const popupSystemSettingHomeStore = usePopupSystemSettingHome()
 const { t } = useI18n()
 const AForm = Form
 const AFormItem = Form.Item
 
 let modelConfigCache = null
 const modelVersion = ref([])
-const sparkModelConfigForm = reactive({
-  appId: '',
-  apiSecret: '',
-  apiKey: ''
-})
-
-const openAiModelConfigForm = reactive({
-  apiKey: ''
-})
+const { sparkModelConfigForm, openAiModelConfigForm } = popupSystemSettingHomeStore
 
 const initModelConfig = () => {
   chrome.storage.local.get(['modelConfig'], (result) => {
@@ -47,11 +41,8 @@ const initModelConfig = () => {
       modelConfigCache = modelConfig
       const { model, modelName, sparkModelConfig, openAiModelConfig } = modelConfig
       modelVersion.value = [model, modelName]
-      sparkModelConfigForm.appId = sparkModelConfig?.appId
-      sparkModelConfigForm.apiSecret = sparkModelConfig?.apiSecret
-      sparkModelConfigForm.apiKey = sparkModelConfig?.apiKey
-      openAiModelConfigForm.apiKey = openAiModelConfig?.apiKey
-      console.log(sparkModelConfigForm, openAiModelConfigForm)
+      popupSystemSettingHomeStore.setSparkModelConfigForm(sparkModelConfig?.appId, sparkModelConfig?.apiSecret, sparkModelConfig?.apiKey)
+      popupSystemSettingHomeStore.setOpenAiModelConfigForm(openAiModelConfig?.apiKey)
     } else {
       modelConfigCache = {
         model: 'SparkApi',
@@ -78,9 +69,6 @@ const handleSparkConfigFinish = (values) => {
   const modelName = modelVersion.value[1]
   if (ApiConfig[modelName]) {
     const { path, domain } = ApiConfig[modelName]
-    sparkModelConfigForm.appId = appId
-    sparkModelConfigForm.apiSecret = apiSecret
-    sparkModelConfigForm.apiKey = apiKey
     const sparkModelConfig = {
       path,
       domain,
@@ -99,7 +87,6 @@ const handleSparkConfigFinish = (values) => {
 
 const handleOpenAiConfigFinish = (values) => {
   const { apiKey } = values
-  openAiModelConfigForm.apiKey = apiKey
   const openAiModelConfig = {
     apiKey
   }

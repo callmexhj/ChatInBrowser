@@ -79,7 +79,7 @@ const messageListener = (request, sender, sendResponse) => {
         messages[messages.length - 1].content = request.data
         isWaitingWS = false
     }
-    if (request.action === 'updatePrimaryColor' || request.action === 'updateLanguage') {
+    if (request.action === 'updatePrimaryColor' || request.action === 'updateLanguage' || request.action === 'updateFloatBall') {
         initSystemConfigByChromeStorage()
     }
 }
@@ -113,6 +113,7 @@ const initSystemConfigByChromeStorage = () => {
         if (res.systemSetting) {
             systemConfigStore.setPrimaryColor(res.systemSetting.primaryColor)
             systemConfigStore.setLanguage(res.systemSetting.language)
+            systemConfigStore.setFloatIco(res.systemSetting.floatIco)
             locale.value = res.systemSetting.language
         }
     })

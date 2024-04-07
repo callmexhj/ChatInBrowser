@@ -1,8 +1,8 @@
 <template>
-    <a-form :model="modelForm" layout="vertical" @finish="handleFinish" autocomplete="off">
+    <a-form :model="openAiModelConfigForm" layout="vertical" @finish="handleFinish" autocomplete="off">
         <a-form-item label="APIKey" name="apiKey"
             :rules="[{ required: true, message: t('popup.model.placeholder.others', ['APIKey']) }]">
-            <a-textarea class="textarea" :auto-size="{ minRows: 3, maxRows: 6 }" v-model:value="modelForm.apiKey"
+            <a-textarea class="textarea" :auto-size="{ minRows: 3, maxRows: 6 }" v-model:value="openAiModelConfigForm.apiKey"
                 :placeholder="t('popup.model.placeholder.others', ['APIKey'])" />
         </a-form-item>
         <a-form-item :wrapper-col="{ flex: 1 }">
@@ -12,29 +12,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
 import { Form, Input, Button } from 'ant-design-vue'
 import { useI18n } from 'vue-i18n'
+import { usePopupSystemSettingHome } from '@/store/popupSystemSettingHome'
 
+const { openAiModelConfigForm } = usePopupSystemSettingHome()
 const { t } = useI18n()
 const AForm = Form
 const AFormItem = Form.Item
 const ATextarea = Input.TextArea
 const emit = defineEmits(['finish'])
-const props = defineProps({
-    modelConfig: Object
-})
-const modelForm = ref({
-    apiKey: ''
-})
-
-onMounted(() => {
-    if (props.modelConfig) {
-        modelForm.value = {
-            apiKey: props.modelConfig.apiKey
-        }
-    }
-})
 
 const handleFinish = (values) => {
     emit('finish', values)

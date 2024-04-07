@@ -1,7 +1,7 @@
 <template>
     <div class="message-content">
         <div class="messages" v-for="(message, index) in messages" :key="`${message.role}_${index}`"
-            :class="messageStyle(message)">
+            :class="messageStyle(message)" @mousemove.stop="handleMessageMove">
             <div class="message-item" v-if="message.role !== 'user'">
                 <div class="md-content" v-html="messageContent(message, index)"></div>
                 <div class="icos">
@@ -37,6 +37,10 @@ const md = new MarkdownIt({
         return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>'
     }
 })
+
+const handleMessageMove = () => {
+    return
+}
 
 const props = defineProps({
     messages: {
