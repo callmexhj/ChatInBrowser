@@ -19,23 +19,25 @@
 import { CommentOutlined, InfoCircleOutlined, ControlOutlined } from '@ant-design/icons-vue'
 import { computed, ref } from 'vue'
 
-const activityIndex = ref(0)
 const emit = defineEmits(['change'])
 const props = defineProps({
     colorPrimary: {
         type: String,
         default: '#820014'
+    },
+    currentPage: {
+        type: Number,
+        default: 0
     }
 })
 
 const handleCheck = (index) => {
-    activityIndex.value = index
     emit('change', index)
 }
 
 const checkedStyle = computed(() => {
     return (index) => {
-        if (index === activityIndex.value) {
+        if (index === props.currentPage) {
             return props.colorPrimary
         }
     }

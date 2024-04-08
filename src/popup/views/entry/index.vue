@@ -6,12 +6,12 @@
     }">
         <Header />
         <router-view />
-        <PageNavigator :colorPrimary="primaryColor" @change="handlePageChange" />
+        <PageNavigator :colorPrimary="primaryColor" :currentPage="currentPage" @change="handlePageChange" />
     </ConfigProvider>
 </template>
 
 <script setup>
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, ref } from 'vue'
 import Header from '../../components/Header/index.vue'
 import PageNavigator from '../../components/PageNavigator/index.vue'
 import { ConfigProvider } from 'ant-design-vue'
@@ -22,6 +22,7 @@ import { useI18n } from 'vue-i18n'
 const { locale } = useI18n()
 const store = useSystemConfigStore()
 const router = useRouter()
+const currentPage = ref(0)
 const pageMap = [
     '/home',
     '/system',
@@ -30,7 +31,22 @@ const pageMap = [
 
 onMounted(() => {
     setSystemConfigFromChromeStorage()
+    navToLastPage()
 })
+
+const navToLastPage = () => {
+    chrome && chrome.storage.local.get('lastPage', (result) => {
+        if (result.lastPage) {
+            currentPage.value = pageMap.indexOf(result.lastPage)
+            router.push(result.lastPage)
+        }
+        else {
+            chrome.storage.local.set({
+                lastPage: '/home'
+            }, () => navToLastPage())
+        }
+    })
+}
 
 const setSystemConfigFromChromeStorage = () => {
     chrome && chrome.storage.local.get('systemSetting', (result) => {
@@ -64,6 +80,10 @@ const primaryColor = computed(() => {
 })
 
 const handlePageChange = (index) => {
+    chrome.storage.local.set({
+        lastPage: pageMap[index]
+    })
+    currentPage.value = index
     router.push(pageMap[index])
 }
 

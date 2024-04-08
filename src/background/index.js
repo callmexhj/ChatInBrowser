@@ -16,7 +16,7 @@ const checkModelConfig = () => {
 
 chrome.contextMenus.create({
     id: 'search',
-    title: 'ChatInBrowser',
+    title: 'Chat in browser',
     type: 'normal',
     contexts: ['selection']
 })
