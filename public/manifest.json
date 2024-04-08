@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "ChatInBrowser",
-    "description": "Base Level Extension",
+    "description": "Chat With LLM In Your Browser!",
     "version": "1.0",
     "action": {
         "default_popup": "index.html",
@@ -20,17 +20,11 @@
     ],
     "permissions": [
         "storage",
-        "declarativeContent",
         "activeTab",
         "scripting",
         "webRequest",
         "clipboardWrite",
         "clipboardRead",
-        "tabs",
-        "contextMenus",
-        "notifications",
-        "downloads",
-        "clipboardWrite",
-        "clipboardRead"
+        "contextMenus"
     ]
 }
