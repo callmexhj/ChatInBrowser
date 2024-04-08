@@ -13,16 +13,15 @@ const checkModelConfig = () => {
         })
     })
 }
-let hasCreateMenu = false
-if (!hasCreateMenu) {
+try{
     chrome.contextMenus.create({
         id: 'search',
         title: 'Chat in browser',
         type: 'normal',
         contexts: ['selection']
-    }, () => {
-        hasCreateMenu = true
     })
+} catch (e) {
+    console.log(e)
 }
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     if (info.menuItemId === "search") {
