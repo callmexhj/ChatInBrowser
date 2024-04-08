@@ -79,4 +79,6 @@ git clone https://github.com/callmexhj/ChatInBrowser.git
 欢迎大家提出ISSUE或者提交代码来改进这个项目！
 
 ## 更新记录
+2024-4-8 Popup默认显示上次打开的路由页面
+
 2024-4-7 支持DIY悬浮球外观

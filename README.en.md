@@ -87,4 +87,6 @@ After completing the model configuration, you can use the model.
 Welcome everyone to raise issues or submit code to improve this project!
 
 ## Update Log
+2024-4-8: Popup defaults to displaying the last opened route page
+
 2024-4-7: Added support for DIY floating ball appearance.
