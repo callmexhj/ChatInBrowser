@@ -1,7 +1,7 @@
 <template>
     <div class="system-setting">
         <a-form :model="systemForm" layout="vertical" autocomplete="off">
-            <a-form-item :label="t('popup.system.primaryColor.title')" name="primaryColor">
+            <a-form-item :label="t('popup.system.primaryColor.title')" name="primaryColor" ref="primaryColorRef">
                 <a-select v-model:value="systemForm.primaryColor" @change="handleColorChange">
                     <a-select-option v-for="item in colorOptions" :value="item.value">
                         <div class="color-item">
@@ -11,13 +11,13 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item :label="t('popup.system.language.title')" name="language">
+            <a-form-item :label="t('popup.system.language.title')" name="language" ref="languageRef">
                 <RadioGroup v-model:value="systemForm.language" button-style="solid" @change="handleLanguageChange">
                     <RadioButton value="zh">中文</RadioButton>
                     <RadioButton value="en">English</RadioButton>
                 </RadioGroup>
             </a-form-item>
-            <a-form-item :label="t('popup.system.icoColor.title')" name="floatIco">
+            <a-form-item :label="t('popup.system.icoColor.title')" name="floatIco" ref="floatBallRef">
                 <RadioGroup v-model:value="systemForm.floatIco.mode" @change="updateFloatBall">
                     <Radio value="color">{{ t('popup.system.icoColor.icoModeRadio.colorMode') }}</Radio>
                     <Radio value="picture">{{ t('popup.system.icoColor.icoModeRadio.pictureMode') }}</Radio>
@@ -25,7 +25,7 @@
                 <div class="opt-slider">
                     <span>{{ t('popup.system.icoColor.optTitle') }}:</span>
                     <Slider :min="20" :step="10" class="slider" v-model:value="systemForm.floatIco.opt"
-                        :tip-formatter="optFormatter" @after-change="updateFloatBall" />
+                        :tip-formatter="optFormatter" @after-change="updateFloatBall"/>
                 </div>
                 <div class="opt-slider" v-if="systemForm.floatIco.mode === 'color'">
                     <span>{{ t('popup.system.icoColor.colorMode.title') }}:</span>
@@ -42,18 +42,27 @@
                 </div>
             </a-form-item>
         </a-form>
+        <Tour
+            :open="tourStore.popupSystemSettingTourOpen"
+            v-model:current="currentTour"
+            :steps="steps"
+            @close="handleOpenTour(false)"
+        />
     </div>
 </template>
 
 <script setup>
-import { reactive, computed, h } from 'vue'
-import { Form, Select, message, RadioGroup, RadioButton, Radio, Slider, Input, Button } from 'ant-design-vue'
+import { reactive, computed, h, ref } from 'vue'
+import { Form, Select, message, RadioGroup, RadioButton, Radio, Slider, Input, Button, Tour } from 'ant-design-vue'
 import { primaryColors } from '@/config/colorInfo'
 import { useSystemConfigStore } from '@/store/systemConfig'
 import { useI18n } from 'vue-i18n'
 import { AreaChartOutlined } from '@ant-design/icons-vue'
+import '@/popup/commonStyles/tour.css'
+import { useTour } from '@/store/tour'
 
 const { t, locale } = useI18n()
+const tourStore = useTour()
 const AForm = Form
 const AFormItem = Form.Item
 const ASelect = Select
@@ -67,6 +76,39 @@ const systemForm = reactive({
 })
 
 const colorOptions = reactive([...primaryColors])
+
+const primaryColorRef = ref(null)
+const languageRef = ref(null)
+const floatBallRef = ref(null)
+const currentTour = ref(0)
+
+const steps = [
+    {
+        title: t('popup.system.tour.primaryColorTitle'),
+        description: t('popup.system.tour.primaryColorValue'),
+        target: () => primaryColorRef.value && primaryColorRef.value.$el,
+        nextButtonProps: {children: t('popup.system.tour.nextBtnText')}
+    },
+    {
+        title: t('popup.system.tour.languageTitle'),
+        description: t('popup.system.tour.languageValue'),
+        target: () => languageRef.value && languageRef.value.$el,
+        prevButtonProps: {children: t('popup.system.tour.prevBtnText')},
+        nextButtonProps: {children: t('popup.system.tour.nextBtnText')}
+    },
+    {
+        title: t('popup.system.tour.floatBallTitle'),
+        description: t('popup.system.tour.floatBallValue'),
+        target: () => floatBallRef.value && floatBallRef.value.$el,
+        prevButtonProps: {children: t('popup.system.tour.prevBtnText')},
+        nextButtonProps: {children: t('popup.system.tour.finalBtnText')}
+    }
+]
+
+const handleOpenTour = (value) => {
+    currentTour.value = 0
+    tourStore.setPopupSystemSettingTourOpen(value)
+}
 
 const handleColorChange = (value) => {
     store.setPrimaryColor(value)

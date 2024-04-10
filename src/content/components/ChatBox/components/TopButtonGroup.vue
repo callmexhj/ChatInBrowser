@@ -3,18 +3,18 @@
         <ButtonGroup>
             <!-- TODO： 自动打开popup -->
             <Tooltip :title="t('content.topButtonGroup.tooltipTitle')">
-                <Button shape="circle">
+                <Button shape="circle" @click="handleOpenTour">
                     <template #icon>
-                        <SettingOutlined />
+                        <QuestionOutlined />
                     </template>
                 </Button>
             </Tooltip>
-            <Button shape="circle" @click="handleClear">
+            <Button shape="circle" @click="handleClear" ref="clearBtn">
                 <template #icon>
                     <ClearOutlined />
                 </template>
             </Button>
-            <Button shape="circle" type="primary" @click="handleClose">
+            <Button shape="circle" type="primary" @click="handleClose" ref="closeBtn">
                 <template #icon>
                     <FullscreenExitOutlined />
                 </template>
@@ -24,17 +24,20 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { Button, Tooltip } from 'ant-design-vue'
 import {
-    SettingOutlined,
+    QuestionOutlined,
     ClearOutlined,
     FullscreenExitOutlined
 } from '@ant-design/icons-vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-const emit = defineEmits(['close', 'clear'])
+const emit = defineEmits(['close', 'clear', 'openTour'])
 const ButtonGroup = Button.Group
+const clearBtn = ref(null)
+const closeBtn = ref(null)
 
 const handleClose = () => {
     emit('close')
@@ -42,6 +45,10 @@ const handleClose = () => {
 
 const handleClear = () => {
     emit('clear')
+}
+
+const handleOpenTour = () => {
+    emit('openTour', true)
 }
 
 </script>

@@ -1,15 +1,19 @@
 <template>
     <div class="chat-box">
-        <div class="default-button" :style="floatBallStyle" v-if="!isShowChatBox" @mousedown="handhowMouseDown" @mouseup="showChatBox"></div>
+        <div class="default-button" :style="floatBallStyle" v-if="!isShowChatBox" @mousedown="handhowMouseDown"
+            @mouseup="showChatBox"></div>
         <div class="chat-box-content" :style="{ backgroundColor: `${colorPrimary}a0` }" v-else>
             <div class="content-top">
-                <top-button-group @close="handleClose" @clear="handleClear" />
+                <top-button-group @close="handleClose" @clear="handleClear" @openTour="handleOpenTour"
+                    ref="topButtonGroup" />
                 <div class="info-message" :style="{ backgroundColor: `${colorPrimary}f0` }">
                     <p>{{ displayValue }}</p>
                 </div>
                 <message-content :messages="messages" :firstSearchQuestion="firstSearchQuestion" />
             </div>
-            <input-content ref="inputContent"  @search="handleSearch"/>
+            <input-content ref="inputContent" @search="handleSearch" />
+            <Tour :open="tourStore.contentTourOpen" v-model:current="currentTour" :steps="steps"
+                @close="handleOpenTour(false)" />
         </div>
     </div>
 </template>
@@ -21,9 +25,16 @@ import MessageContent from './components/MessageContent.vue'
 import InputContent from './components/InputContent.vue'
 import { useI18n } from 'vue-i18n'
 import { useSystemConfigStore } from '@/store/systemConfig'
+import { Tour } from 'ant-design-vue'
+import { useTour } from '@/store/tour'
+import '@/content/commonStyles/tour.css'
 
 const { floatIco } = useSystemConfigStore()
+const tourStore = useTour()
+const currentTour = ref(0)
 const { t } = useI18n()
+const topButtonGroup = ref(null)
+const inputContent = ref()
 const props = defineProps({
     isShowChatBox: {
         type: Boolean,
@@ -46,9 +57,31 @@ const props = defineProps({
         default: ''
     }
 })
-const inputContent = ref()
 const emit = defineEmits(['onShowChatBox', 'close', 'search', 'clear'])
 let startTime = 0
+
+const steps = [
+    {
+        title: t('content.tour.clearButtonTitle'),
+        description: t('content.tour.clearButtonValue'),
+        target: () => topButtonGroup.value.$refs.clearBtn && topButtonGroup.value.$refs.clearBtn.$el,
+        nextButtonProps: { children: t('content.tour.nextBtnText') }
+    },
+    {
+        title: t('content.tour.closeButtonTitle'),
+        description: t('content.tour.closeButtonValue'),
+        target: () => topButtonGroup.value.$refs.closeBtn && topButtonGroup.value.$refs.closeBtn.$el,
+        prevButtonProps: { children: t('content.tour.prevBtnText') },
+        nextButtonProps: { children: t('content.tour.nextBtnText') }
+    },
+    {
+        title: t('content.tour.inputBoxTitle'),
+        description: t('content.tour.inputBoxValue'),
+        target: () => inputContent.value && inputContent.value.$el,
+        prevButtonProps: { children: t('content.tour.prevBtnText') },
+        nextButtonProps: { children: t('content.tour.finalBtnText') }
+    },
+]
 
 const handhowMouseDown = () => {
     startTime = new Date().getTime()
@@ -92,6 +125,11 @@ const floatBallStyle = computed(() => {
     }
     return { ...style }
 })
+
+const handleOpenTour = (value) => {
+    currentTour.value = 0
+    tourStore.setContentTourOpen(value)
+}
 
 </script>
 

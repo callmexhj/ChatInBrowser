@@ -13,13 +13,16 @@ const checkModelConfig = () => {
         })
     })
 }
-
-chrome.contextMenus.create({
-    id: 'search',
-    title: 'Chat in browser',
-    type: 'normal',
-    contexts: ['selection']
-})
+try{
+    chrome.contextMenus.create({
+        id: 'search',
+        title: 'Chat in browser',
+        type: 'normal',
+        contexts: ['selection']
+    })
+} catch (e) {
+    console.log(e)
+}
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     if (info.menuItemId === "search") {
         await chrome.tabs.sendMessage(tab.id, {
