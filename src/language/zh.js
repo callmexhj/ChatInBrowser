@@ -7,7 +7,18 @@ export const zh = {
                 model: '请选择模型',
                 others: '请输入{0}'
             },
-            changeInfo: '保存成功'
+            changeInfo: '保存成功',
+            tour: {
+                nextBtnText: '下一步',
+                prevBtnText: '上一步',
+                finalBtnText: '知道啦',
+                modelVersionTitle: '模型版本',
+                modelVersionValue: '在此可以选择模型版本',
+                modelConfigTitle: '模型配置',
+                modelConfigValue: '在此可以配置模型供应商要求提供的各项参数（具体可查看模型API文档）',
+                saveModelTitle: '保存配置',
+                saveModelValue: '点击此按钮可以保存模型配置',
+            }
         },
         system: {
             title: '系统设置',
@@ -36,6 +47,17 @@ export const zh = {
                     pictureMode: '图片模式'
                 },
                 changeInfo: '悬浮球保存成功'
+            },
+            tour: {
+                nextBtnText: '下一步',
+                prevBtnText: '上一步',
+                finalBtnText: '知道啦',
+                primaryColorTitle: '修改主题色',
+                primaryColorValue: '可以点击下拉框选择插件的主题颜色',
+                languageTitle: '修改插件语言',
+                languageValue: '可以点击单选框来选择插件的语言',
+                floatBallTitle: '修改悬浮球外观',
+                floatBallValue: '此处可以修改悬浮球的外观'
             }
         },
         more: {
@@ -70,6 +92,19 @@ export const zh = {
             okText: '确认',
             cancelText: '取消'
         },
-        defaultAssistantMessage: '分析中...'
+        defaultAssistantMessage: '分析中...',
+        tour: {
+            nextBtnText: '下一步',
+            prevBtnText: '上一步',
+            finalBtnText: '知道啦',
+            clearButtonTitle: '清除按钮',
+            clearButtonValue: '点击此按钮可以清除所有聊天记录。',
+            closeButtonTitle: '缩小按钮',
+            closeButtonValue: '点击此按钮可以最小化聊天框。',
+            copyValueTitle: '选中内容',
+            copyValueValue: '在网页中选择中一段文字后，可以点击鼠标右键菜单中的Chat In Browser,将该段文本作为大模型提示的一部分作为输入。',
+            inputBoxTitle: '输入框',
+            inputBoxValue: '在这可以输入你想和大模型交流的内容，按右边的按钮发送。同时你也可以使用键盘快捷键shift+enter来快速发送。'
+        }
     }
 }
