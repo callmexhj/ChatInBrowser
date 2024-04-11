@@ -5,6 +5,7 @@ export const useSystemConfigStore = defineStore('systemConfig', {
         return {
             primaryColor: '',
             language: '',
+            mask: '',
             floatIco: {
                 opt: '',
                 mode: '',
@@ -14,6 +15,9 @@ export const useSystemConfigStore = defineStore('systemConfig', {
         }
     },
     actions: {
+        setMask(mask) {
+            this.mask = mask
+        },
         setPrimaryColor(color) {
             this.primaryColor = color
         },

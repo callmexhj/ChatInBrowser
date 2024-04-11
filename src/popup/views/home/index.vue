@@ -116,9 +116,7 @@ const handleSparkConfigFinish = (values) => {
     modelConfigCache.sparkModelConfig = { ...sparkModelConfig }
     chrome.storage.local.set({
       modelConfig: modelConfigCache
-    }, () => {
-      message.success(t('popup.model.changeInfo'))
-    })
+    }, () => message.success(t('popup.model.changeInfo')))
   }
 }
 
@@ -130,9 +128,7 @@ const handleOpenAiConfigFinish = (values) => {
   modelConfigCache.openAiModelConfig = { ...openAiModelConfig }
   chrome.storage.local.set({
     modelConfig: modelConfigCache
-  }, () => {
-    message.success(t('popup.model.changeInfo'))
-  })
+  }, () => message.success(t('popup.model.changeInfo')))
 }
 
 </script>

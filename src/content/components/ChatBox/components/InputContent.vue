@@ -1,6 +1,7 @@
 <template>
     <div class="input-content">
-        <TextArea class="input-content-input" v-model:value="userInput" :autofocus="true" :placeholder="t('content.inputContent.placeholder')" auto-size @keydown="handleKeyDown"  />
+        <TextArea class="input-content-input" v-model:value="userInput" :auto-size="{ minRows: 1, maxRows: 5 }"
+            :autofocus="true" :placeholder="t('content.inputContent.placeholder')" auto-size @keydown="handleKeyDown" />
         <Button shape="circle" type="primary" @click="handleClick">
             <template #icon>
                 <MessageOutlined />
@@ -16,7 +17,7 @@ import { MessageOutlined } from '@ant-design/icons-vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-const TextArea  = Input.TextArea
+const TextArea = Input.TextArea
 const emit = defineEmits(['search'])
 const userInput = ref('')
 
@@ -49,9 +50,11 @@ defineExpose({
     justify-content: space-between;
     margin: 10px 0 20px 0;
 }
-.input-content :deep(.ant-btn-primary){
+
+.input-content :deep(.ant-btn-primary) {
     box-shadow: none;
 }
+
 .input-content-input {
     width: 80%;
 }

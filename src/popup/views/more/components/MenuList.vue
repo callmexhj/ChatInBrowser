@@ -37,17 +37,11 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const emit = defineEmits(['aboutExt', 'projectHome', 'createIssue'])
 
-const handleAboutExt = () => {
-    emit('aboutExt')
-}
+const handleAboutExt = () => emit('aboutExt')
 
-const handleProjectHome = () => {
-    emit('projectHome')
-}
+const handleProjectHome = () => emit('projectHome')
 
-const handleCreateIssue = () => {
-    emit('createIssue')
-}
+const handleCreateIssue = () => emit('createIssue')
 </script>
 
 <style scoped>

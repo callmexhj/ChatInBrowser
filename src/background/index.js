@@ -40,7 +40,7 @@ chrome.runtime.onMessage.addListener(async ({ action, data }, sender, sendRespon
             if (messages.length === 0) {
                 messages.push({
                     role: "user",
-                    content: genPromptText(searchValue, copyValue)
+                    content: await genPromptText(searchValue, copyValue)
                 })
             } else {
                 messages.push({

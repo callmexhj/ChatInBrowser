@@ -22,6 +22,10 @@ export const zh = {
         },
         system: {
             title: '系统设置',
+            mask: {
+                title: '角色面具',
+                changeInfo: '面具保存成功'
+            },
             primaryColor: {
                 title: '主题色',
                 changeInfo: '主题色保存成功'
@@ -91,6 +95,12 @@ export const zh = {
             title: '此操作将清除ChatInBrowser的历史记录，请确认是否继续',
             okText: '确认',
             cancelText: '取消'
+        },
+        updateMask: {
+            title: '面具更新',
+            content: '面具已经更新，立刻使用新面具将会清空历史对话',
+            okText: '立即使用',
+            cancelText: '稍后使用'
         },
         defaultAssistantMessage: '分析中...',
         tour: {

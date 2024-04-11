@@ -30,13 +30,9 @@ const handleModalOk = () => {
     isModalOpen.value = false
 }
 
-const handleProjectHome = () => {
-    window.open('https://github.com/callmexhj/ChatInBrowser')
-}
+const handleProjectHome = () => window.open('https://github.com/callmexhj/ChatInBrowser')
 
-const handleCreateIssue = () => {
-    window.open('https://github.com/callmexhj/ChatInBrowser/issues')
-}
+const handleCreateIssue = () => window.open('https://github.com/callmexhj/ChatInBrowser/issues')
 </script>
 
 <style scoped>

@@ -78,9 +78,7 @@ const messageStyle = computed(() => {
     }
 })
 
-const markdownCompile = (messageValue) => {
-    return md.render(messageValue)
-}
+const markdownCompile = (messageValue) => md.render(messageValue)
 
 const messageContent = computed(() => {
     return (message, index) => {

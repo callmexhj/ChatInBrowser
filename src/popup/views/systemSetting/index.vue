@@ -1,6 +1,9 @@
 <template>
     <div class="system-setting">
         <a-form :model="systemForm" layout="vertical" autocomplete="off">
+            <a-form-item class="content-flex" :label="t('popup.system.mask.title')" name="mask" ref="maskRef">
+                <mask-selector v-model:modelValue="systemForm.mask" @change="handleMaskChange" />
+            </a-form-item>
             <a-form-item :label="t('popup.system.primaryColor.title')" name="primaryColor" ref="primaryColorRef">
                 <a-select v-model:value="systemForm.primaryColor" @change="handleColorChange">
                     <a-select-option v-for="item in colorOptions" :value="item.value">
@@ -60,6 +63,7 @@ import { useI18n } from 'vue-i18n'
 import { AreaChartOutlined } from '@ant-design/icons-vue'
 import '@/popup/commonStyles/tour.css'
 import { useTour } from '@/store/tour'
+import MaskSelector from './components/MaskSelector/MaskSelector.vue'
 
 const { t, locale } = useI18n()
 const tourStore = useTour()
@@ -72,7 +76,8 @@ const store = useSystemConfigStore()
 const systemForm = reactive({
     primaryColor: store.primaryColor,
     language: store.language,
-    floatIco: store.floatIco
+    floatIco: store.floatIco,
+    mask: store.mask
 })
 
 const colorOptions = reactive([...primaryColors])
@@ -141,9 +146,7 @@ const handleLanguageChange = ({ target: { value } }) => {
     })
 }
 
-const optFormatter = (value) => {
-    return `${value}%`
-}
+const optFormatter = (value) => `${value}%`
 
 const updateFloatBall = () => {
     store.setFloatIco(systemForm.floatIco)
@@ -199,11 +202,29 @@ const handleChoosePic = () => {
     input.click()
 }
 
+const handleMaskChange = (mask) => {
+    store.setMask(mask)
+    console.log(mask, systemForm, store.mask)
+    chrome.storage.local.set({
+        systemSetting: systemForm
+    }, () => {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            chrome.tabs.sendMessage(tabs[0].id, {
+                action: 'updateMask'
+            })
+        })
+        message.success(t('popup.system.mask.changeInfo'))
+    })
+}
+
 </script>
 
 <style scoped>
+@import '@/commonStyles/scrollBar.css';
 .system-setting {
     padding: 10px;
+    overflow: auto;
+    height: 430px;
 }
 
 .color-item {
@@ -234,5 +255,9 @@ const handleChoosePic = () => {
     width: 50px;
     border-radius: 50%;
     margin-left: 20px;
+}
+
+.content-flex :deep(.ant-form-item-control-input-content) {
+    flex: none !important;
 }
 </style>
