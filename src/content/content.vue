@@ -104,9 +104,7 @@ const handleSearch = (searchValue) => {
     })
 }
 
-const primaryColor = computed(() => {
-    return systemConfigStore.primaryColor
-})
+const primaryColor = computed(() => systemConfigStore.primaryColor)
 
 const initSystemConfigByChromeStorage = () => {
     chrome && chrome.storage.local.get('systemSetting', (res) => {

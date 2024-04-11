@@ -39,18 +39,11 @@ const ButtonGroup = Button.Group
 const clearBtn = ref(null)
 const closeBtn = ref(null)
 
-const handleClose = () => {
-    emit('close')
-}
+const handleClose = () => emit('close')
 
-const handleClear = () => {
-    emit('clear')
-}
+const handleClear = () => emit('clear')
 
-const handleOpenTour = () => {
-    emit('openTour', true)
-}
-
+const handleOpenTour = () => emit('openTour', true)
 </script>
 
 <style scoped>

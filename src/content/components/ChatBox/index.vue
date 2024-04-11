@@ -92,22 +92,16 @@ const showChatBox = () => {
     emit('onShowChatBox')
 }
 
-const handleClose = () => {
-    emit('close')
-}
+const handleClose = () => emit('close')
 
-const handleClear = () => {
-    emit('clear')
-}
+const handleClear = () => emit('clear')
 
 const handleSearch = (value) => {
     emit('search', value)
     inputContent.value.handleClear()
 }
 
-const displayValue = computed(() => {
-    return props.copyValue === '' ? t('content.defaultCopyValue') : props.copyValue
-})
+const displayValue = computed(() => props.copyValue === '' ? t('content.defaultCopyValue') : props.copyValue)
 
 const floatBallStyle = computed(() => {
     const style = {
