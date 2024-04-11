@@ -1,6 +1,6 @@
 <template>
     <div class="input-content">
-        <TextArea class="input-content-input" v-model:value="userInput" :autofocus="true" :placeholder="t('content.inputContent.placeholder')" auto-size @keydown="handleKeyDown"  />
+        <TextArea class="input-content-input" v-model:value="userInput" :auto-size="{ minRows: 1, maxRows: 5}" :autofocus="true" :placeholder="t('content.inputContent.placeholder')" auto-size @keydown="handleKeyDown"  />
         <Button shape="circle" type="primary" @click="handleClick">
             <template #icon>
                 <MessageOutlined />

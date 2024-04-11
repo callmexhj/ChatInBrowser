@@ -119,7 +119,7 @@ const floatBallStyle = computed(() => {
         style.backgroundSize = 'contain'
         style.backgroundOrigin = 'content-box'
         style.backgroundRepeat = 'no-repeat'
-        style.padding = '5px'
+        // style.padding = '5px'
         style.width = '45px'
         style.height = '45px'
     }
