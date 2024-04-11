@@ -54,6 +54,7 @@ const setSystemConfigFromChromeStorage = () => {
             store.setPrimaryColor(result.systemSetting.primaryColor)
             store.setLanguage(result.systemSetting.language)
             store.setFloatIco(result.systemSetting.floatIco)
+            store.setMask(result.systemSetting.mask)
             locale.value = result.systemSetting.language
         }
         else {
@@ -61,6 +62,7 @@ const setSystemConfigFromChromeStorage = () => {
                 systemSetting: {
                     primaryColor: '#262626',
                     language: 'zh',
+                    mask: 'common',
                     floatIco: {
                         opt: 100,
                         mode: 'color',

@@ -82,9 +82,22 @@ const messageListener = (request, sender, sendResponse) => {
     if (request.action === 'updatePrimaryColor' || request.action === 'updateLanguage' || request.action === 'updateFloatBall') {
         initSystemConfigByChromeStorage()
     }
+    if (request.action === 'updateMask') {
+        Modal.confirm({
+            title: t('content.updateMask.title'),
+            content: t('content.updateMask.content'),
+            okText: t('content.updateMask.okText'),
+            cancelText: t('content.updateMask.cancelText'),
+            onOk() {
+                handleClear()
+                copyValue.value = request.data
+                onShowChatBox()
+            }
+        })
+    }
 }
 
-const handleSearch = (searchValue) => {
+const handleSearch = async (searchValue) => {
     isWaitingWS = true
     if (messages.length === 0) firstSearchQuestion.value = searchValue
     chrome.runtime.sendMessage({
@@ -97,7 +110,7 @@ const handleSearch = (searchValue) => {
     })
     messages.push({
         role: 'user',
-        content: messages.length > 1 ? searchValue : genPromptText(searchValue, copyValue.value)
+        content: messages.length > 1 ? searchValue : await genPromptText(searchValue, copyValue.value)
     }, {
         role: 'assistant',
         content: t('content.defaultAssistantMessage')

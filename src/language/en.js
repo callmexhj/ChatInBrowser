@@ -22,6 +22,10 @@ export const en = {
         },
         system: {
             title: 'system setup',
+            mask: {
+                title: 'Mask',
+                changeInfo: 'Saved successfully'
+            },
             primaryColor: {
                 title: 'Primary Color',
                 changeInfo: 'Saved successfully'
@@ -91,6 +95,12 @@ export const en = {
             title: 'This operation will clear the history of ChatInBrowser, please confirm whether to continue.',
             okText: 'Confirm',
             cancelText: 'Cancel'
+        },
+        updateMask: {
+            title: 'Mask Update',
+            content: 'The mask has been updated. Using the new mask immediately will clear the history of conversations.',
+            okText: 'Use Now',
+            cancelText: 'Use Later'
         },
         defaultAssistantMessage: 'Analyzing...',
         tour: {
