@@ -33,9 +33,7 @@ const emit = defineEmits(['finish'])
 const modelConfigFormRef = ref(null)
 const modelConfigFormButtonRef = ref(null)
 
-const handleFinish = (values) => {
-    emit('finish', values)
-}
+const handleFinish = (values) => emit('finish', values)
 
 </script>
 

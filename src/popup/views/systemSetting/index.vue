@@ -141,9 +141,7 @@ const handleLanguageChange = ({ target: { value } }) => {
     })
 }
 
-const optFormatter = (value) => {
-    return `${value}%`
-}
+const optFormatter = (value) => `${value}%`
 
 const updateFloatBall = () => {
     store.setFloatIco(systemForm.floatIco)

@@ -68,16 +68,12 @@ const setSystemConfigFromChromeStorage = () => {
                         img: ''
                     }
                 }
-            }, () => {
-                setSystemConfigFromChromeStorage()
-            })
+            }, () => setSystemConfigFromChromeStorage())
         }
     })
 }
 
-const primaryColor = computed(() => {
-    return store.primaryColor
-})
+const primaryColor = computed(() => store.primaryColor)
 
 const handlePageChange = (index) => {
     chrome.storage.local.set({
