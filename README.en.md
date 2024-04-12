@@ -1,6 +1,7 @@
 ![logo](markdown/chatIco64.png)
 # ChatInBrowser
 ### <u>[Chinese Document](README.md)</u>
+### <u>[Download from the Microsoft Edge Store](https://microsoftedge.microsoft.com/addons/detail/chatinbrowser/dnniphioahcepggnakblboabmpllegci)</u>
 
 ChatInBrowser allows you to chat anytime in your browser using a large model, and it even supports directly copying web content as part of the Prompt for querying.
 
@@ -87,6 +88,15 @@ After completing the model configuration, you can use the model.
 Welcome everyone to raise issues or submit code to improve this project!
 
 ## Update Log
-2024-4-8: Popup defaults to displaying the last opened route page
+2024-4-12 
+1. Added mask function, supporting the use of different prompts to fine-tune LLM.
+2. Added new user guide function to help users quickly get started with the plugin.
+3. Fixed some bugs.
 
-2024-4-7: Added support for DIY floating ball appearance.
+2024-4-8: 
+1. Popup defaults to displaying the last opened route page
+2. Fixed some bugs.
+
+2024-4-7: 
+1. Added support for DIY floating ball appearance.
+2. Fixed some bugs.
