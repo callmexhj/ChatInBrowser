@@ -24,7 +24,13 @@ export const zh = {
             title: '系统设置',
             mask: {
                 title: '角色面具',
-                changeInfo: '面具保存成功'
+                changeInfo: '面具保存成功',
+                maskList: {
+                    commonLabel: '通用助手',
+                    translatorLabel: '翻译家',
+                    programmerLabel: '程序员',
+                    writerLabel: '作家'
+                }
             },
             primaryColor: {
                 title: '主题色',
@@ -56,6 +62,8 @@ export const zh = {
                 nextBtnText: '下一步',
                 prevBtnText: '上一步',
                 finalBtnText: '知道啦',
+                maskTitle: "修改角色面具",
+                maskValue: "你可以通过修改角色，使用不同的Prompt来控制大语言模型输出更加符合您需求的回答",
                 primaryColorTitle: '修改主题色',
                 primaryColorValue: '可以点击下拉框选择插件的主题颜色',
                 languageTitle: '修改插件语言',

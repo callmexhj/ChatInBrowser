@@ -24,7 +24,13 @@ export const en = {
             title: 'system setup',
             mask: {
                 title: 'Mask',
-                changeInfo: 'Saved successfully'
+                changeInfo: 'Saved successfully',
+                maskList: {
+                    commonLabel: "Common Assistant",
+                    translatorLabel: "Translator",
+                    programmerLabel: "Programmer",
+                    writerLabel: "Writer"
+                }
             },
             primaryColor: {
                 title: 'Primary Color',
@@ -56,6 +62,8 @@ export const en = {
                 nextBtnText: 'Next',
                 prevBtnText: 'Previous',
                 finalBtnText: 'Got it',
+                maskTitle: "Change Mask",
+                maskValue: "You can control the output of the large language model more closely to your needs by changing the role and using different prompts.",
                 primaryColorTitle: "Change Theme Color",
                 primaryColorValue: "You can click on the dropdown to select the plugin's theme color.",
                 languageTitle: "Change Plugin Language",

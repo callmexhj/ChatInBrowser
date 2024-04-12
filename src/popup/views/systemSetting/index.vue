@@ -2,7 +2,7 @@
     <div class="system-setting">
         <a-form :model="systemForm" layout="vertical" autocomplete="off">
             <a-form-item class="content-flex" :label="t('popup.system.mask.title')" name="mask" ref="maskRef">
-                <mask-selector v-model:modelValue="systemForm.mask" @change="handleMaskChange" />
+                <mask-selector ref="maskRef" v-model:modelValue="systemForm.mask" @change="handleMaskChange" />
             </a-form-item>
             <a-form-item :label="t('popup.system.primaryColor.title')" name="primaryColor" ref="primaryColorRef">
                 <a-select v-model:value="systemForm.primaryColor" @change="handleColorChange">
@@ -28,7 +28,7 @@
                 <div class="opt-slider">
                     <span>{{ t('popup.system.icoColor.optTitle') }}:</span>
                     <Slider :min="20" :step="10" class="slider" v-model:value="systemForm.floatIco.opt"
-                        :tip-formatter="optFormatter" @after-change="updateFloatBall"/>
+                        :tip-formatter="optFormatter" @after-change="updateFloatBall" />
                 </div>
                 <div class="opt-slider" v-if="systemForm.floatIco.mode === 'color'">
                     <span>{{ t('popup.system.icoColor.colorMode.title') }}:</span>
@@ -45,12 +45,8 @@
                 </div>
             </a-form-item>
         </a-form>
-        <Tour
-            :open="tourStore.popupSystemSettingTourOpen"
-            v-model:current="currentTour"
-            :steps="steps"
-            @close="handleOpenTour(false)"
-        />
+        <Tour :open="tourStore.popupSystemSettingTourOpen" v-model:current="currentTour" :steps="steps"
+            @close="handleOpenTour(false)" />
     </div>
 </template>
 
@@ -85,30 +81,42 @@ const colorOptions = reactive([...primaryColors])
 const primaryColorRef = ref(null)
 const languageRef = ref(null)
 const floatBallRef = ref(null)
+const maskRef = ref(null)
 const currentTour = ref(0)
 
-const steps = [
-    {
-        title: t('popup.system.tour.primaryColorTitle'),
-        description: t('popup.system.tour.primaryColorValue'),
-        target: () => primaryColorRef.value && primaryColorRef.value.$el,
-        nextButtonProps: {children: t('popup.system.tour.nextBtnText')}
-    },
-    {
-        title: t('popup.system.tour.languageTitle'),
-        description: t('popup.system.tour.languageValue'),
-        target: () => languageRef.value && languageRef.value.$el,
-        prevButtonProps: {children: t('popup.system.tour.prevBtnText')},
-        nextButtonProps: {children: t('popup.system.tour.nextBtnText')}
-    },
-    {
-        title: t('popup.system.tour.floatBallTitle'),
-        description: t('popup.system.tour.floatBallValue'),
-        target: () => floatBallRef.value && floatBallRef.value.$el,
-        prevButtonProps: {children: t('popup.system.tour.prevBtnText')},
-        nextButtonProps: {children: t('popup.system.tour.finalBtnText')}
-    }
-]
+const steps = computed(() => {
+    // 热更新当前页面语言
+    if (!store.language) return []
+    return [
+        {
+            title: t('popup.system.tour.maskTitle'),
+            description: t('popup.system.tour.maskValue'),
+            target: () => maskRef.value && maskRef.value.$el,
+            nextButtonProps: { children: t('popup.system.tour.nextBtnText') }
+        },
+        {
+            title: t('popup.system.tour.primaryColorTitle'),
+            description: t('popup.system.tour.primaryColorValue'),
+            target: () => primaryColorRef.value && primaryColorRef.value.$el,
+            prevButtonProps: { children: t('popup.system.tour.prevBtnText') },
+            nextButtonProps: { children: t('popup.system.tour.nextBtnText') }
+        },
+        {
+            title: t('popup.system.tour.languageTitle'),
+            description: t('popup.system.tour.languageValue'),
+            target: () => languageRef.value && languageRef.value.$el,
+            prevButtonProps: { children: t('popup.system.tour.prevBtnText') },
+            nextButtonProps: { children: t('popup.system.tour.nextBtnText') }
+        },
+        {
+            title: t('popup.system.tour.floatBallTitle'),
+            description: t('popup.system.tour.floatBallValue'),
+            target: () => floatBallRef.value && floatBallRef.value.$el,
+            prevButtonProps: { children: t('popup.system.tour.prevBtnText') },
+            nextButtonProps: { children: t('popup.system.tour.finalBtnText') }
+        }
+    ]
+})
 
 const handleOpenTour = (value) => {
     currentTour.value = 0
@@ -221,6 +229,7 @@ const handleMaskChange = (mask) => {
 
 <style scoped>
 @import '@/commonStyles/scrollBar.css';
+
 .system-setting {
     padding: 10px;
     overflow: auto;

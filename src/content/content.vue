@@ -25,7 +25,6 @@ const { locale, t } = useI18n()
 const systemConfigStore = useSystemConfigStore()
 const dragBallRef = ref()
 const isShowChatBox = ref(false)
-const colorPrimary = ref('#820014')
 const copyValue = ref('')
 const messages = reactive([])
 let isWaitingWS = false
