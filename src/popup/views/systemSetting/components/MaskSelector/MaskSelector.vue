@@ -10,7 +10,7 @@
             <img class="right-ico" src="./Images/right.png" />
         </div>
         <div v-else class="mask-list">
-            <Tooltip v-for="item in maskListFilter" :key="item.value" :title="item.label">
+            <Tooltip v-for="item in maskListFilter" :key="item.value" :title="toolTipTitlte(item.value)">
                 <img class="icon-img ico-list-img" :src="item.icon" @click.stop="handleChooseMask(item.value)" />
             </Tooltip>
             <img class="right-ico left-ico" src="./Images/right.png" />
@@ -20,12 +20,13 @@
 
 <script setup>
 import { Divider, Tooltip } from "ant-design-vue"
-import { computed, ref } from "vue"
+import { computed, ref, watch } from "vue"
 import { useSystemConfigStore } from "@/store/systemConfig"
 import CommonPng from './Images/common.png'
 import TranslatorPng from './Images/translator.png'
 import WriterPng from './Images/writer.png'
 import ProgrammerPng from './Images/programmer.png'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
     modelValue: {
@@ -34,6 +35,7 @@ const props = defineProps({
     }
 })
 
+const { t } = useI18n()
 const emit = defineEmits(['update:modelValue', 'change'])
 const systemStore = useSystemConfigStore()
 const isSelectorOver = ref(false)
@@ -41,28 +43,39 @@ const isMaskSelectorOpened = ref(false)
 const maskList = [
     {
         value: 'common',
-        label: '通用助手',
+        label: t('popup.system.mask.maskList.commonLabel'),
         icon: CommonPng
     },
     {
         value: 'translator',
-        label: '翻译家',
+        label: t('popup.system.mask.maskList.translatorLabel'),
         icon: TranslatorPng
     },
     {
         value: 'programmer',
-        label: '程序员',
+        label: t('popup.system.mask.maskList.programmerLabel'),
         icon: ProgrammerPng
     },
     {
         value: 'writer',
-        label: '作家',
+        label: t('popup.system.mask.maskList.writerLabel'),
         icon: WriterPng
     }
 ]
 
+const toolTipTitlte = computed(() => {
+    // 热更新当前页面语言
+    return (value) => {
+        if (!systemStore.language) return ''
+        return t(`popup.system.mask.maskList.${value}Label`)
+    }
+})
+
 const selectedMaskLabel = computed(() => {
-    return maskList.find(item => item.value === props.modelValue).label
+    // 热更新当前页面语言
+    if (!systemStore.language) return ''
+    const value = maskList.find(item => item.value === props.modelValue).value
+    return t(`popup.system.mask.maskList.${value}Label`)
 })
 const maskListFilter = computed(() => {
     return maskList.filter(item => item.value !== props.modelValue)

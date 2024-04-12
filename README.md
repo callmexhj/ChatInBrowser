@@ -1,6 +1,7 @@
 ![logo](markdown/chatIco64.png)
 # ChatInBrowser
 ### <u>[English Document](README.en.md)</u>
+### <u>[从微软Edge商店下载](https://microsoftedge.microsoft.com/addons/detail/chatinbrowser/dnniphioahcepggnakblboabmpllegci)</u>
 ChatInBrowser可以让你在浏览器随时使用大模型进行聊天，更支持直接复制网页内容作为Prompt的一部分进行提问。
 ## 开发步骤
 ### 1. 移动至项目根目录
@@ -79,6 +80,15 @@ git clone https://github.com/callmexhj/ChatInBrowser.git
 欢迎大家提出ISSUE或者提交代码来改进这个项目！
 
 ## 更新记录
-2024-4-8 Popup默认显示上次打开的路由页面
+2024-4-12 
+1. 新增了面具功能，支持使用不同的Prompt来微调LLM。
+2. 新增了新手指引功能，帮助用户快速入门插件。
+3. 修复了部分bug。
 
-2024-4-7 支持DIY悬浮球外观
+2024-4-8 
+1. Popup默认显示上次打开的路由页面。
+2. 修复了部分bug。
+
+2024-4-7 
+1. 支持DIY悬浮球外观。
+2. 修复了部分bug。

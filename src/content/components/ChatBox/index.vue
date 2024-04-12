@@ -29,7 +29,7 @@ import { Tour } from 'ant-design-vue'
 import { useTour } from '@/store/tour'
 import '@/content/commonStyles/tour.css'
 
-const { floatIco } = useSystemConfigStore()
+const systemConfigStore = useSystemConfigStore()
 const tourStore = useTour()
 const currentTour = ref(0)
 const { t } = useI18n()
@@ -60,28 +60,32 @@ const props = defineProps({
 const emit = defineEmits(['onShowChatBox', 'close', 'search', 'clear'])
 let startTime = 0
 
-const steps = [
-    {
-        title: t('content.tour.clearButtonTitle'),
-        description: t('content.tour.clearButtonValue'),
-        target: () => topButtonGroup.value.$refs.clearBtn && topButtonGroup.value.$refs.clearBtn.$el,
-        nextButtonProps: { children: t('content.tour.nextBtnText') }
-    },
-    {
-        title: t('content.tour.closeButtonTitle'),
-        description: t('content.tour.closeButtonValue'),
-        target: () => topButtonGroup.value.$refs.closeBtn && topButtonGroup.value.$refs.closeBtn.$el,
-        prevButtonProps: { children: t('content.tour.prevBtnText') },
-        nextButtonProps: { children: t('content.tour.nextBtnText') }
-    },
-    {
-        title: t('content.tour.inputBoxTitle'),
-        description: t('content.tour.inputBoxValue'),
-        target: () => inputContent.value && inputContent.value.$el,
-        prevButtonProps: { children: t('content.tour.prevBtnText') },
-        nextButtonProps: { children: t('content.tour.finalBtnText') }
-    },
-]
+const steps = computed(() => {
+    // 热更新当前页面语言
+    if (!systemConfigStore.language) return []
+    return [
+        {
+            title: t('content.tour.clearButtonTitle'),
+            description: t('content.tour.clearButtonValue'),
+            target: () => topButtonGroup.value.$refs.clearBtn && topButtonGroup.value.$refs.clearBtn.$el,
+            nextButtonProps: { children: t('content.tour.nextBtnText') }
+        },
+        {
+            title: t('content.tour.closeButtonTitle'),
+            description: t('content.tour.closeButtonValue'),
+            target: () => topButtonGroup.value.$refs.closeBtn && topButtonGroup.value.$refs.closeBtn.$el,
+            prevButtonProps: { children: t('content.tour.prevBtnText') },
+            nextButtonProps: { children: t('content.tour.nextBtnText') }
+        },
+        {
+            title: t('content.tour.inputBoxTitle'),
+            description: t('content.tour.inputBoxValue'),
+            target: () => inputContent.value && inputContent.value.$el,
+            prevButtonProps: { children: t('content.tour.prevBtnText') },
+            nextButtonProps: { children: t('content.tour.finalBtnText') }
+        },
+    ]
+})
 
 const handhowMouseDown = () => {
     startTime = new Date().getTime()
@@ -105,11 +109,11 @@ const displayValue = computed(() => props.copyValue === '' ? t('content.defaultC
 
 const floatBallStyle = computed(() => {
     const style = {
-        opacity: floatIco.opt / 100
+        opacity: systemConfigStore.floatIco.opt / 100
     }
-    if (floatIco?.mode === 'color' && floatIco.color) style.background = floatIco.color
-    if (floatIco?.mode === 'picture' && floatIco.img) {
-        style.backgroundImage = `url(${floatIco.img})`
+    if (systemConfigStore.floatIco?.mode === 'color' && systemConfigStore.floatIco.color) style.background = systemConfigStore.floatIco.color
+    if (systemConfigStore.floatIco?.mode === 'picture' && systemConfigStore.floatIco.img) {
+        style.backgroundImage = `url(${systemConfigStore.floatIco.img})`
         style.backgroundSize = 'contain'
         style.backgroundOrigin = 'content-box'
         style.backgroundRepeat = 'no-repeat'
