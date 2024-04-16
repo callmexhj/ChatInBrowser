@@ -93,11 +93,14 @@ export const en = {
         },
         messageContent: {
             copyTitle: 'Click to copy',
-            copySuccessInfo: 'Copied successfully'
+            copySuccessInfo: 'Copied successfully',
+            modelVersionTitle: '· From'
         },
         topButtonGroup: {
-            tooltipTitle: 'Please click the plug-in icon to set up'
-        },
+            tourTitle: 'Please click the plugin icon to configure',
+            clearTitle: 'Click to clear all records',
+            closeTitle: 'Click to minimize the chat box'
+        },        
         defaultCopyValue: 'Web page text can be copied as search content',
         clearConfirmModal: {
             title: 'This operation will clear the history of ChatInBrowser, please confirm whether to continue.',

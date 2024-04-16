@@ -88,7 +88,11 @@ After completing the model configuration, you can use the model.
 Welcome everyone to raise issues or submit code to improve this project!
 
 ## Update Log
-2024-4-12 
+2024-04-16 (v1.0.2):
+1. Chat box now supports displaying the model version number to assist users in differentiation.
+2. Floating tooltips have been added to the top buttons within the chat box.
+
+2024-4-12 (v1.0.1):
 1. Added mask function, supporting the use of different prompts to fine-tune LLM.
 2. Added new user guide function to help users quickly get started with the plugin.
 3. Fixed some bugs.
