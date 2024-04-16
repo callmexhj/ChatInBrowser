@@ -96,6 +96,16 @@ const messageListener = (request, sender, sendResponse) => {
     }
 }
 
+const getModelVersion = () => {
+    return new Promise((resolve) => {
+        chrome && chrome.storage.local.get('modelConfig', (res) => {
+        if (res.modelConfig) {
+            resolve(res.modelConfig.modelName)
+        }
+    })
+    })
+}
+
 const handleSearch = async (searchValue) => {
     isWaitingWS = true
     if (messages.length === 0) firstSearchQuestion.value = searchValue
@@ -107,11 +117,14 @@ const handleSearch = async (searchValue) => {
             copyValue: copyValue.value
         }
     })
+    const modelVersion = await getModelVersion()
     messages.push({
         role: 'user',
+        model: modelVersion,
         content: messages.length > 1 ? searchValue : await genPromptText(searchValue, copyValue.value)
     }, {
         role: 'assistant',
+        model: modelVersion,
         content: t('content.defaultAssistantMessage')
     })
 }

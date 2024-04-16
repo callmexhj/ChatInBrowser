@@ -5,6 +5,7 @@
             <div class="message-item" v-if="message.role !== 'user'">
                 <div class="md-content" v-html="messageContent(message, index)"></div>
                 <div class="icos">
+                    <div class="model-version">{{ `${t('content.messageContent.modelVersionTitle')} ${message.model}` }}</div>
                     <img src="@/content/images/copy.png" :title="t('content.messageContent.copyTitle')" @click="handleCopy(message)">
                 </div>
             </div>
@@ -156,7 +157,8 @@ const messageContent = computed(() => {
 
 .icos {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .icos img {
@@ -186,5 +188,10 @@ const messageContent = computed(() => {
 .message-item-system .message-item {
     background-color: #fff;
     padding: 10px 10px 5px;
+}
+
+.model-version {
+    font-size: 10px;
+    color: #a0a0a0;
 }
 </style>

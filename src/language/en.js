@@ -93,7 +93,8 @@ export const en = {
         },
         messageContent: {
             copyTitle: 'Click to copy',
-            copySuccessInfo: 'Copied successfully'
+            copySuccessInfo: 'Copied successfully',
+            modelVersionTitle: '· From'
         },
         topButtonGroup: {
             tooltipTitle: 'Please click the plug-in icon to set up'

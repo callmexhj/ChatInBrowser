@@ -13,7 +13,9 @@ const checkModelConfig = () => {
         })
     })
 }
+
 try{
+    // 注入右键菜单
     chrome.contextMenus.create({
         id: 'search',
         title: 'Chat in browser',
@@ -23,7 +25,9 @@ try{
 } catch (e) {
     console.log(e)
 }
+
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+    // 右键菜单响应事件
     if (info.menuItemId === "search") {
         await chrome.tabs.sendMessage(tab.id, {
             action: 'userCopy',
@@ -31,13 +35,19 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
         })
     }
 })
+
 chrome.runtime.onMessage.addListener(async ({ action, data }, sender, sendResponse) => {
     if (action === 'search') {
         let modelConfig = null
         try {
             modelConfig = await checkModelConfig()
             const { messages, searchValue, copyValue } = data
+            // 删除model字段以通过接口校验
+            messages.forEach(obj => {
+                delete obj.model
+            })
             if (messages.length === 0) {
+                // 第一条user消息需要构造prompt
                 messages.push({
                     role: "user",
                     content: await genPromptText(searchValue, copyValue)
@@ -48,6 +58,7 @@ chrome.runtime.onMessage.addListener(async ({ action, data }, sender, sendRespon
                     content: searchValue
                 })
             }
+            // 根据模型配置调用不同的接口方法
             if (modelConfig.model === 'SparkApi') {
                 await connectSparkWebSocket(messages, sender, modelConfig.sparkModelConfig)
             } else if (modelConfig.model === 'OpenAI') {

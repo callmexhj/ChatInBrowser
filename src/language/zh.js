@@ -93,7 +93,8 @@ export const zh = {
         },
         messageContent: {
             copyTitle: '点击复制',
-            copySuccessInfo: '复制成功'
+            copySuccessInfo: '复制成功',
+            modelVersionTitle: '· 来自'
         },
         topButtonGroup: {
             tooltipTitle: '请点击插件图标进行设置'
