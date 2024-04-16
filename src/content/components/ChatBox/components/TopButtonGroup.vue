@@ -2,18 +2,20 @@
     <div class="button-group-background">
         <ButtonGroup>
             <!-- TODO： 自动打开popup -->
-            <Tooltip :title="t('content.topButtonGroup.tooltipTitle')">
+            <Tooltip :title="t('content.topButtonGroup.tourTitle')">
                 <Button shape="circle" @click="handleOpenTour">
                     <template #icon>
                         <QuestionOutlined />
                     </template>
                 </Button>
             </Tooltip>
-            <Button shape="circle" @click="handleClear" ref="clearBtn">
-                <template #icon>
-                    <ClearOutlined />
-                </template>
-            </Button>
+            <Tooltip :title="t('content.topButtonGroup.clearTitle')">
+                <Button shape="circle" @click="handleClear" ref="clearBtn">
+                    <template #icon>
+                        <ClearOutlined />
+                    </template>
+                </Button>
+            </Tooltip>
             <Button shape="circle" type="primary" @click="handleClose" ref="closeBtn">
                 <template #icon>
                     <FullscreenExitOutlined />
@@ -53,7 +55,8 @@ const handleOpenTour = () => emit('openTour', true)
     justify-content: flex-end;
     margin: 10px;
 }
-.button-group-background :deep(.ant-btn-primary){
+
+.button-group-background :deep(.ant-btn-primary) {
     box-shadow: none;
 }
 </style>

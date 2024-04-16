@@ -97,7 +97,9 @@ export const zh = {
             modelVersionTitle: '· 来自'
         },
         topButtonGroup: {
-            tooltipTitle: '请点击插件图标进行设置'
+            tourTitle: '请点击插件图标进行设置',
+            clearTitle: '点击清除全部记录',
+            closeTitle: '点击最小化聊天框'
         },
         defaultCopyValue: '可复制网页文字作为搜索内容',
         clearConfirmModal: {

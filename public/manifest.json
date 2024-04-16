@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "ChatInBrowser",
     "description": "Chat With LLM In Your Browser!",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "action": {
         "default_popup": "index.html",
         "default_icon": "chatIco.png",
