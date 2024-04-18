@@ -3,6 +3,18 @@
 ### <u>[English Document](README.en.md)</u>
 ### <u>[从微软Edge商店下载](https://microsoftedge.microsoft.com/addons/detail/chatinbrowser/dnniphioahcepggnakblboabmpllegci)</u>
 ChatInBrowser可以让你在浏览器随时使用大模型进行聊天，更支持直接复制网页内容作为Prompt的一部分进行提问。
+
+目前支持的模型有：
+#### [OpenAI](https://platform.openai.com/docs/introduction)
+1. [gpt-3.5-turbo](https://platform.openai.com/docs/guides/text-generation/chat-completions-api)
+#### [科大讯飞星火大模型](https://xinghuo.xfyun.cn/sparkapi)
+1. [Spark v1.5](https://www.xfyun.cn/doc/spark/Web.html)
+2. [Spark v2.0](https://www.xfyun.cn/doc/spark/Web.html)
+3. [Spark v3.1](https://www.xfyun.cn/doc/spark/Web.html)
+4. [Spark v3.5](https://www.xfyun.cn/doc/spark/Web.html)
+#### [百度文心一言大模型](https://console.bce.baidu.com/qianfan/overview)
+1. [Ernie-3.5](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/jlil56u11)
+2. [Ernie-4.0](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/clntwmv7t)
 ## 开发步骤
 ### 1. 移动至项目根目录
 ```bash
@@ -80,6 +92,9 @@ git clone https://github.com/callmexhj/ChatInBrowser.git
 欢迎大家提出ISSUE或者提交代码来改进这个项目！
 
 ## 更新记录
+2024-04-18 (v1.0.3)
+1. 支持文心一言3.5和4.0模型
+
 2024-04-16 (v1.0.2)
 1. 聊天框中支持显示模型版本号，以帮助用户区分。
 2. 聊天框顶部按钮新增悬浮提示。

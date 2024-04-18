@@ -2,6 +2,16 @@ import { ApiConfig } from '../api/config'
 
 export const modelOptions = [
     {
+      value: 'OpenAI',
+      label: 'OpenAI',
+      children: [
+        {
+          value: ApiConfig.gpt35_turbo.name,
+          label: 'gpt-3.5-turbo'
+        }
+      ]
+    },
+    {
       value: 'SparkApi',
       label: '讯飞星火模型',
       children: [
@@ -24,12 +34,16 @@ export const modelOptions = [
       ]
     },
     {
-      value: 'OpenAI',
-      label: 'OpenAI',
+      value: 'WenxinYiyan',
+      label: '文心一言',
       children: [
         {
-          value: ApiConfig.gpt35_turbo.name,
-          label: 'gpt-3.5-turbo'
+          value: ApiConfig.ernie_35.name,
+          label: 'Ernie-3.5'
+        },
+        {
+          value: ApiConfig.ernie_40.name,
+          label: 'Ernie-4.0'
         }
       ]
     }

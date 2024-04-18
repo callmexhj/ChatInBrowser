@@ -212,7 +212,6 @@ const handleChoosePic = () => {
 
 const handleMaskChange = (mask) => {
     store.setMask(mask)
-    console.log(mask, systemForm, store.mask)
     chrome.storage.local.set({
         systemSetting: systemForm
     }, () => {

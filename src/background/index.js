@@ -1,6 +1,7 @@
 import { connectSparkWebSocket } from '@/tools/sparkchat'
 import { genPromptText } from '@/tools/genPromptText'
 import { chatFunc } from '@/tools/openaichat'
+import { wenxinCon } from '@/tools/wenxin'
 
 const checkModelConfig = () => {
     return new Promise((resolve, reject) => {
@@ -63,6 +64,8 @@ chrome.runtime.onMessage.addListener(async ({ action, data }, sender, sendRespon
                 await connectSparkWebSocket(messages, sender, modelConfig.sparkModelConfig)
             } else if (modelConfig.model === 'OpenAI') {
                 await chatFunc(messages, sender, modelConfig.openAiModelConfig)
+            } else if (modelConfig.model === 'WenxinYiyan') {
+                await wenxinCon(messages, sender, modelConfig.wenxinModelConfig, modelConfig.modelName)
             }
         } catch (error) {
             await chrome.tabs.sendMessage(sender.tab.id, {

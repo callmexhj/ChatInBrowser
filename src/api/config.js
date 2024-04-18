@@ -28,5 +28,17 @@ export const ApiConfig = {
         path: 'empty',
         version: 'empty',
         domain: 'empty'
-    }
+    },
+    ernie_35: {
+        name: 'ernie-3.5',
+        path: 'https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/completions',
+        version: 'empty',
+        domain: 'empty'
+    },
+    ernie_40: {
+        name: 'ernie-4.0',
+        path: 'https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/completions_pro',
+        version: 'empty',
+        domain: 'empty'
+    },
 }

@@ -10,6 +10,10 @@ export const usePopupSystemSettingHome = defineStore('popupSystemSettingHome', {
             },
             openAiModelConfigForm: {
                 apiKey: ''
+            },
+            wenxinModelConfigForm: {
+                apiKey: '',
+                apiSecret: ''
             }
         }
     },
@@ -21,6 +25,10 @@ export const usePopupSystemSettingHome = defineStore('popupSystemSettingHome', {
         },
         setOpenAiModelConfigForm(apiKey) {
             this.openAiModelConfigForm.apiKey = apiKey
+        },
+        setWenxinModelConfigForm(apiKey, apiSecret) {
+            this.wenxinModelConfigForm.apiKey = apiKey
+            this.wenxinModelConfigForm.apiSecret = apiSecret
         }
     }
 })
