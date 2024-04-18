@@ -4,14 +4,17 @@
       <a-form layout="vertical">
         <a-form-item label="Model" ref="modelVersionRef">
           <Cascader :allowClear="false" v-model:value="modelVersion" :options="modelOptions"
-            :placeholder="t('popup.model.placeholder.model')" />
+            :placeholder="t('popup.model.placeholder.model')" @change="handleModelVersionChange"/>
         </a-form-item>
       </a-form>
+      <!-- 根据模型配置渲染对应表单 -->
       <spark-form ref="modelConfigRef"
         v-if="modelVersion.length > 0 && modelVersion[0] === 'SparkApi' || (modelVersion.length === 0 && tourStore.popupHomeTourOpen)"
         :modelConfig="sparkModelConfigForm" @finish="handleSparkConfigFinish" />
       <OpenAiForm ref="modelConfigRef" v-if="modelVersion.length > 0 && modelVersion[0] === 'OpenAI'"
         :modelConfig="openAiModelConfigForm" @finish="handleOpenAiConfigFinish" />
+      <WenxinForm ref="modelConfigRef" v-if="modelVersion.length > 0 && modelVersion[0] === 'WenxinYiyan'"
+        :modelConfig="wenxinModelConfigForm" @finish="handleWenxinConfigFinish" />
     </div>
     <Tour :open="tourStore.popupHomeTourOpen" v-model:current="currentTour" :steps="steps"
       @close="handleOpenTour(false)" />
@@ -26,6 +29,7 @@ import { useI18n } from 'vue-i18n'
 import { modelOptions } from '@/config/modelInfo'
 import SparkForm from './components/SparkForm.vue'
 import OpenAiForm from './components/OpenAiForm.vue'
+import WenxinForm from './components/WenxinForm.vue'
 import { usePopupSystemSettingHome } from '@/store/popupSystemSettingHome'
 import '@/popup/commonStyles/tour.css'
 import { useTour } from '@/store/tour'
@@ -41,7 +45,9 @@ const modelVersion = ref([])
 const currentTour = ref(0)
 const modelVersionRef = ref(null)
 const modelConfigRef = ref(null)
-const { sparkModelConfigForm, openAiModelConfigForm } = popupSystemSettingHomeStore
+const { sparkModelConfigForm, openAiModelConfigForm, wenxinModelConfigForm } = popupSystemSettingHomeStore
+
+const handleModelVersionChange = (values) => console.log(values)
 
 const steps = [
   {
@@ -76,16 +82,20 @@ const initModelConfig = () => {
     const { modelConfig } = result
     if (modelConfig) {
       modelConfigCache = modelConfig
-      const { model, modelName, sparkModelConfig, openAiModelConfig } = modelConfig
+      const { model, modelName, sparkModelConfig, openAiModelConfig, wenxinModelConfig } = modelConfig
       modelVersion.value = [model, modelName]
+      // pinia初始化
       popupSystemSettingHomeStore.setSparkModelConfigForm(sparkModelConfig?.appId, sparkModelConfig?.apiSecret, sparkModelConfig?.apiKey)
       popupSystemSettingHomeStore.setOpenAiModelConfigForm(openAiModelConfig?.apiKey)
+      popupSystemSettingHomeStore.setWenxinModelConfigForm(wenxinModelConfig?.apiKey, wenxinModelConfig?.apiSecret)
     } else {
+      // 初始化设置
       modelConfigCache = {
         model: 'SparkApi',
         modelName: 'spark3_5',
         sparkModelConfig: null,
-        openAiModelConfig: null
+        openAiModelConfig: null,
+        wenxinModelConfig: null
       }
     }
   })
@@ -95,6 +105,7 @@ onMounted(() => {
   initModelConfig()
 })
 
+// 监听模型版本变化以更新当前缓存
 watch(modelVersion, (newValue) => {
   const [model, modelName] = newValue
   modelConfigCache.model = model
@@ -129,6 +140,18 @@ const handleOpenAiConfigFinish = (values) => {
   chrome.storage.local.set({
     modelConfig: modelConfigCache
   }, () => message.success(t('popup.model.changeInfo')))
+}
+
+const handleWenxinConfigFinish = (values) => {
+  const { apiKey, apiSecret } = values
+  const wenxinModelConfig = {
+    apiKey,
+    apiSecret
+  }
+  modelConfigCache.wenxinModelConfig = { ...wenxinModelConfig }
+  chrome.storage.local.set({
+      modelConfig: modelConfigCache
+    }, () => message.success(t('popup.model.changeInfo')))
 }
 
 </script>
