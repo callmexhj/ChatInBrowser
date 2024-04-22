@@ -46,5 +46,23 @@ export const modelOptions = [
           label: 'Ernie-4.0'
         }
       ]
+    },
+    {
+      value: 'Tongyi',
+      label: '通义千问',
+      children: [
+        {
+          value: ApiConfig.qwen_turbo.name,
+          label: 'qwen-turbo'
+        },
+        {
+          value: ApiConfig.qwen_plus.name,
+          label: 'qwen-plus'
+        },
+        {
+          value: ApiConfig.qwen_max.name,
+          label: 'qwen-max'
+        }
+      ]
     }
   ]

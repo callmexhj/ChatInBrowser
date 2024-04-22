@@ -8,15 +8,37 @@ ChatInBrowser allows you to chat anytime in your browser using a large model, an
 Currently supported models are:
 
 #### [OpenAI](https://platform.openai.com/docs/introduction)
-1. [gpt-3.5-turbo](https://platform.openai.com/docs/guides/text-generation/chat-completions-api)
+[gpt-3.5-turbo](https://platform.openai.com/docs/guides/text-generation/chat-completions-api)
 #### [Spark Model](https://xinghuo.xfyun.cn/sparkapi)
-1. [Spark v1.5](https://www.xfyun.cn/doc/spark/Web.html)
-2. [Spark v2.0](https://www.xfyun.cn/doc/spark/Web.html)
-3. [Spark v3.1](https://www.xfyun.cn/doc/spark/Web.html)
-4. [Spark v3.5](https://www.xfyun.cn/doc/spark/Web.html)
+[Spark v1.5](https://www.xfyun.cn/doc/spark/Web.html), [Spark v2.0](https://www.xfyun.cn/doc/spark/Web.html), [Spark v3.1](https://www.xfyun.cn/doc/spark/Web.html), [Spark v3.5](https://www.xfyun.cn/doc/spark/Web.html)
 #### [Ernie Bot](https://console.bce.baidu.com/qianfan/overview)
-1. [Ernie-3.5](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/jlil56u11)
-2. [Ernie-4.0](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/clntwmv7t)
+[Ernie-3.5](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/jlil56u11), [Ernie-4.0](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/clntwmv7t)
+#### [AliYun DashScope](https://help.aliyun.com/zh/dashscope/developer-reference/tongyiqianwen-large-language-models)
+[qwen-turbo](https://help.aliyun.com/zh/dashscope/developer-reference/model-introduction), [qwen-plus](https://help.aliyun.com/zh/dashscope/developer-reference/model-introduction), [qwen-max](https://help.aliyun.com/zh/dashscope/developer-reference/model-introduction)
+
+## Update Log
+2024-04-22 (v1.0.4)
+1. Supports Qwen-Turbo, Qwen-Plus, and Qwen-Max models.
+
+2024-04-18 (v1.0.3)
+1. Support Ernie Bot 3.5 and 4.0 models
+
+2024-04-16 (v1.0.2):
+1. Chat box now supports displaying the model version number to assist users in differentiation.
+2. Floating tooltips have been added to the top buttons within the chat box.
+
+2024-4-12 (v1.0.1):
+1. Added mask function, supporting the use of different prompts to fine-tune LLM.
+2. Added new user guide function to help users quickly get started with the plugin.
+3. Fixed some bugs.
+
+2024-4-8: 
+1. Popup defaults to displaying the last opened route page
+2. Fixed some bugs.
+
+2024-4-7: 
+1. Added support for DIY floating ball appearance.
+2. Fixed some bugs.
 
 ## Development Steps
 ### 1. Navigate to the Project Root Directory
@@ -99,24 +121,3 @@ After completing the model configuration, you can use the model.
 
 ## Let's Optimize This Project Together
 Welcome everyone to raise issues or submit code to improve this project!
-
-## Update Log
-2024-04-18 (v1.0.3)
-1. Support Ernie Bot 3.5 and 4.0 models
-
-2024-04-16 (v1.0.2):
-1. Chat box now supports displaying the model version number to assist users in differentiation.
-2. Floating tooltips have been added to the top buttons within the chat box.
-
-2024-4-12 (v1.0.1):
-1. Added mask function, supporting the use of different prompts to fine-tune LLM.
-2. Added new user guide function to help users quickly get started with the plugin.
-3. Fixed some bugs.
-
-2024-4-8: 
-1. Popup defaults to displaying the last opened route page
-2. Fixed some bugs.
-
-2024-4-7: 
-1. Added support for DIY floating ball appearance.
-2. Fixed some bugs.
