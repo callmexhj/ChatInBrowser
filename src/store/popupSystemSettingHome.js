@@ -14,7 +14,10 @@ export const usePopupSystemSettingHome = defineStore('popupSystemSettingHome', {
             wenxinModelConfigForm: {
                 apiKey: '',
                 apiSecret: ''
-            }
+            },
+            tongyiModelConfigForm: {
+                apiKey: ''
+            },
         }
     },
     actions: {
@@ -29,6 +32,9 @@ export const usePopupSystemSettingHome = defineStore('popupSystemSettingHome', {
         setWenxinModelConfigForm(apiKey, apiSecret) {
             this.wenxinModelConfigForm.apiKey = apiKey
             this.wenxinModelConfigForm.apiSecret = apiSecret
-        }
+        },
+        setTongyiModelConfigForm(apiKey) {
+            this.tongyiModelConfigForm.apiKey = apiKey
+        },
     }
 })

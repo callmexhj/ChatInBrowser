@@ -41,4 +41,22 @@ export const ApiConfig = {
         version: 'empty',
         domain: 'empty'
     },
+    qwen_turbo: {
+        name: 'qwen-turbo',
+        path: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation',
+        version: 'empty',
+        domain: 'empty'
+    },
+    qwen_plus: {
+        name: 'qwen-plus',
+        path: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation',
+        version: 'empty',
+        domain: 'empty'
+    },
+    qwen_max: {
+        name: 'qwen-max',
+        path: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation',
+        version: 'empty',
+        domain: 'empty'
+    }
 }
