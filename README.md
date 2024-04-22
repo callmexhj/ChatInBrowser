@@ -6,15 +6,38 @@ ChatInBrowser可以让你在浏览器随时使用大模型进行聊天，更支�
 
 目前支持的模型有：
 #### [OpenAI](https://platform.openai.com/docs/introduction)
-1. [gpt-3.5-turbo](https://platform.openai.com/docs/guides/text-generation/chat-completions-api)
+[gpt-3.5-turbo](https://platform.openai.com/docs/guides/text-generation/chat-completions-api)
 #### [科大讯飞星火大模型](https://xinghuo.xfyun.cn/sparkapi)
-1. [Spark v1.5](https://www.xfyun.cn/doc/spark/Web.html)
-2. [Spark v2.0](https://www.xfyun.cn/doc/spark/Web.html)
-3. [Spark v3.1](https://www.xfyun.cn/doc/spark/Web.html)
-4. [Spark v3.5](https://www.xfyun.cn/doc/spark/Web.html)
+[Spark v1.5](https://www.xfyun.cn/doc/spark/Web.html), [Spark v2.0](https://www.xfyun.cn/doc/spark/Web.html), [Spark v3.1](https://www.xfyun.cn/doc/spark/Web.html), [Spark v3.5](https://www.xfyun.cn/doc/spark/Web.html)
 #### [百度文心一言大模型](https://console.bce.baidu.com/qianfan/overview)
-1. [Ernie-3.5](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/jlil56u11)
-2. [Ernie-4.0](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/clntwmv7t)
+[Ernie-3.5](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/jlil56u11), [Ernie-4.0](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/clntwmv7t)
+#### [阿里通义千问大模型](https://help.aliyun.com/zh/dashscope/developer-reference/tongyiqianwen-large-language-models)
+[qwen-turbo](https://help.aliyun.com/zh/dashscope/developer-reference/model-introduction), [qwen-plus](https://help.aliyun.com/zh/dashscope/developer-reference/model-introduction), [qwen-max](https://help.aliyun.com/zh/dashscope/developer-reference/model-introduction)
+
+## 更新记录
+2024-04-22 (v1.0.4)
+1. 支持通义千问qwen-turbo, qwen-plus, qwen-max模型
+
+2024-04-18 (v1.0.3)
+1. 支持文心一言3.5和4.0模型
+
+2024-04-16 (v1.0.2)
+1. 聊天框中支持显示模型版本号，以帮助用户区分。
+2. 聊天框顶部按钮新增悬浮提示。
+
+2024-4-12 (v1.0.1)
+1. 新增了面具功能，支持使用不同的Prompt来微调LLM。
+2. 新增了新手指引功能，帮助用户快速入门插件。
+3. 修复了部分bug。
+
+2024-4-8 
+1. Popup默认显示上次打开的路由页面。
+2. 修复了部分bug。
+
+2024-4-7 
+1. 支持DIY悬浮球外观。
+2. 修复了部分bug。
+
 ## 开发步骤
 ### 1. 移动至项目根目录
 ```bash
@@ -90,24 +113,3 @@ git clone https://github.com/callmexhj/ChatInBrowser.git
 
 ## 一起优化这个项目
 欢迎大家提出ISSUE或者提交代码来改进这个项目！
-
-## 更新记录
-2024-04-18 (v1.0.3)
-1. 支持文心一言3.5和4.0模型
-
-2024-04-16 (v1.0.2)
-1. 聊天框中支持显示模型版本号，以帮助用户区分。
-2. 聊天框顶部按钮新增悬浮提示。
-
-2024-4-12 (v1.0.1)
-1. 新增了面具功能，支持使用不同的Prompt来微调LLM。
-2. 新增了新手指引功能，帮助用户快速入门插件。
-3. 修复了部分bug。
-
-2024-4-8 
-1. Popup默认显示上次打开的路由页面。
-2. 修复了部分bug。
-
-2024-4-7 
-1. 支持DIY悬浮球外观。
-2. 修复了部分bug。
