@@ -16,7 +16,7 @@
     "highlight.js": "^11.9.0",
     "markdown-it": "^14.1.0",
     "marked": "^12.0.1",
-    "openai": "^4.32.1",
+    "openai": "^4.84.0",
     "pinia": "^2.1.7",
     "unplugin-vue-components": "^0.26.0",
     "vue": "^3.4.21",

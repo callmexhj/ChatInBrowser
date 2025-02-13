@@ -64,7 +64,29 @@ const messageListener = (request, sender, sendResponse) => {
         }
     }
     if (request.action === 'websocketMessage') {
-        if (request.data) {
+        if (request?.hasReasoningContent) {
+            if (request.reasoningContent) {
+                if (isWaitingWS) {
+                messages[messages.length - 1].content = ''
+                messages[messages.length - 1].reasoningContent = request.reasoningContent
+                messages[messages.length - 1].hasReasoningContent = true
+                isWaitingWS = false
+                } else {
+                    messages[messages.length - 1].reasoningContent += request.reasoningContent
+                    messages[messages.length - 1].hasReasoningContent = true
+                }
+            }
+            if (request.data) {
+                if (isWaitingWS) {
+                    messages[messages.length - 1].content = request.data
+                    messages[messages.length - 1].hasReasoningContent = true
+                    isWaitingWS = false
+                } else {
+                    messages[messages.length - 1].content += request.data
+                    messages[messages.length - 1].hasReasoningContent = true
+                }
+            }
+        } else if (request.data) {
             if (isWaitingWS) {
                 messages[messages.length - 1].content = request.data
                 isWaitingWS = false

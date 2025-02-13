@@ -3,6 +3,15 @@
         <div class="messages" v-for="(message, index) in messages" :key="`${message.role}_${index}`"
             :class="messageStyle(message)" @mousemove.stop="handleMessageMove">
             <div class="message-item" v-if="message.role !== 'user'">
+                <div class="reasoning-content" v-if="message?.hasReasoningContent">
+                    <Collapse defaultActiveKey="1" :bordered="false">
+                        <CollapsePanel key="1" header="思考中">
+                            <div class="reasoning-content-text">
+                                {{ message?.reasoningContent }}
+                            </div>
+                        </CollapsePanel>
+                    </Collapse>
+                </div>
                 <div class="md-content" v-html="messageContent(message, index)"></div>
                 <div class="icos">
                     <div class="model-version">{{ `${t('content.messageContent.modelVersionTitle')} ${message.model}` }}</div>
@@ -18,7 +27,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { message } from 'ant-design-vue'
+import { message, Collapse, CollapsePanel } from 'ant-design-vue'
 import 'highlight.js/styles/vs2015.min.css'
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
@@ -193,5 +202,26 @@ const messageContent = computed(() => {
 .model-version {
     font-size: 10px;
     color: #a0a0a0;
+}
+
+.reasoning-content {
+    display: flex;
+    gap: 12px;
+}
+
+.reasoning-content .ant-collapse-header {
+    padding: 0 8px;
+    font-size: 12px;
+}
+
+.reasoning-content-text::before {
+    content: '';
+    height: 100%;
+    border-left: 2px solid #e5e5e5;
+}
+
+.reasoning-content-text {
+    color: #8b8b8b;
+    font-size: 10px;
 }
 </style>
