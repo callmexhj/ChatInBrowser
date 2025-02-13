@@ -18,6 +18,9 @@ export const usePopupSystemSettingHome = defineStore('popupSystemSettingHome', {
             tongyiModelConfigForm: {
                 apiKey: ''
             },
+            deepseekModelConfigForm: {
+                apiKey: ''
+            },
         }
     },
     actions: {
@@ -35,6 +38,9 @@ export const usePopupSystemSettingHome = defineStore('popupSystemSettingHome', {
         },
         setTongyiModelConfigForm(apiKey) {
             this.tongyiModelConfigForm.apiKey = apiKey
+        },
+        setDeepseekModelConfigForm(apiKey) {
+            this.deepseekModelConfigForm.apiKey = apiKey
         },
     }
 })
