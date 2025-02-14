@@ -1,16 +1,15 @@
-import { has } from "markdown-it/lib/common/utils.mjs"
 import OpenAI from "openai"
 
 export const deepseekChatFunc = async (messages, sender, deepseekModelConfig, modelName) => {
     try {
         const openai = new OpenAI({
-            baseURL: 'https://api.deepseek.com',
+            baseURL: 'https://maas-api.cn-huabei-1.xf-yun.com/v1',
             apiKey: deepseekModelConfig.apiKey,
             dangerouslyAllowBrowser: true,
             timeout: 5000
         })
         const completion = await openai.chat.completions.create({
-            model: modelName,
+            model: 'xdeepseekr1',
             messages,
             stream: true
         })

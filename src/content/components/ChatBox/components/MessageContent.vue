@@ -4,8 +4,8 @@
             :class="messageStyle(message)" @mousemove.stop="handleMessageMove">
             <div class="message-item" v-if="message.role !== 'user'">
                 <div class="reasoning-content" v-if="message?.hasReasoningContent">
-                    <Collapse defaultActiveKey="1" :bordered="false">
-                        <CollapsePanel key="1" header="思考中">
+                    <Collapse v-model="activeCollapseKey" :bordered="false">
+                        <CollapsePanel key="1" :header="reasonFinished(message) ? '思考完成' : '思考中...'">
                             <div class="reasoning-content-text">
                                 {{ message?.reasoningContent }}
                             </div>
@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { message, Collapse, CollapsePanel } from 'ant-design-vue'
 import 'highlight.js/styles/vs2015.min.css'
 import MarkdownIt from 'markdown-it'
@@ -34,6 +34,8 @@ import hljs from 'highlight.js'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
+
+const activeCollapseKey = ref(['1'])
 
 const md = new MarkdownIt({
     highlight: function (str, lang) {
@@ -47,6 +49,10 @@ const md = new MarkdownIt({
         return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>'
     }
 })
+
+const handleCollapseChanged = (key) => {
+    activeCollapseKey[0] = key[0]
+}
 
 const handleMessageMove = () => {
     return
@@ -97,6 +103,16 @@ const messageContent = computed(() => {
             : message.role !== 'user'
                 ? markdownCompile(message.content)
                 : message.content
+    }
+})
+const reasonFinished = computed(() => {
+    return (message) => {
+        if (message.content) {
+            activeCollapseKey.value = ['-1']
+            return true
+        } else {
+            return false
+        }
     }
 })
 
