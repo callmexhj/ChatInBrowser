@@ -3,14 +3,13 @@
         <div class="messages" v-for="(message, index) in messages" :key="`${message.role}_${index}`"
             :class="messageStyle(message)" @mousemove.stop="handleMessageMove">
             <div class="message-item" v-if="message.role !== 'user'">
-                <div class="reasoning-content" v-if="message?.hasReasoningContent">
-                    <Collapse v-model="activeCollapseKey" :bordered="false">
-                        <CollapsePanel key="1" :header="reasonFinished(message) ? '思考完成' : '思考中...'">
-                            <div class="reasoning-content-text">
-                                {{ message?.reasoningContent }}
-                            </div>
-                        </CollapsePanel>
-                    </Collapse>
+                <div class="reasoning-content-header" v-if="message?.reasoningContent" @click="handleChangeHeader">
+                    <span>{{ t('content.thoughtContent') }}</span>
+                    <FullscreenExitOutlined class="icon-btn" v-if="headerStatus"/>
+                    <FullscreenOutlined class="icon-btn" v-else/>
+                </div>
+                <div class="reasoning-content-text" v-if="headerStatus">
+                    {{ message?.reasoningContent }}
                 </div>
                 <div class="md-content" v-html="messageContent(message, index)"></div>
                 <div class="icos">
@@ -27,7 +26,8 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { message, Collapse, CollapsePanel } from 'ant-design-vue'
+import { message } from 'ant-design-vue'
+import { FullscreenOutlined, FullscreenExitOutlined } from '@ant-design/icons-vue'
 import 'highlight.js/styles/vs2015.min.css'
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
@@ -35,7 +35,7 @@ import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
-const activeCollapseKey = ref(['1'])
+const headerStatus = ref(true)
 
 const md = new MarkdownIt({
     highlight: function (str, lang) {
@@ -49,10 +49,6 @@ const md = new MarkdownIt({
         return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>'
     }
 })
-
-const handleCollapseChanged = (key) => {
-    activeCollapseKey[0] = key[0]
-}
 
 const handleMessageMove = () => {
     return
@@ -68,6 +64,10 @@ const props = defineProps({
         default: ''
     }
 })
+
+const handleChangeHeader = () => {
+    headerStatus.value = !headerStatus.value
+}
 
 const handleCopy = (messageValue) => {
     if (navigator.clipboard && window.isSecureContext) {
@@ -103,16 +103,6 @@ const messageContent = computed(() => {
             : message.role !== 'user'
                 ? markdownCompile(message.content)
                 : message.content
-    }
-})
-const reasonFinished = computed(() => {
-    return (message) => {
-        if (message.content) {
-            activeCollapseKey.value = ['-1']
-            return true
-        } else {
-            return false
-        }
     }
 })
 
@@ -230,14 +220,21 @@ const reasonFinished = computed(() => {
     font-size: 12px;
 }
 
-.reasoning-content-text::before {
-    content: '';
-    height: 100%;
-    border-left: 2px solid #e5e5e5;
-}
-
 .reasoning-content-text {
     color: #8b8b8b;
     font-size: 10px;
+}
+
+.reasoning-content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #262626;
+    margin-bottom: 8px;
+    cursor: pointer;
 }
 </style>

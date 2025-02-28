@@ -114,6 +114,7 @@ export const zh = {
             cancelText: '稍后使用'
         },
         defaultAssistantMessage: '分析中...',
+        thoughtContent: '思考内容',
         tour: {
             nextBtnText: '下一步',
             prevBtnText: '上一步',

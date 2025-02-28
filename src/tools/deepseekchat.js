@@ -3,13 +3,13 @@ import OpenAI from "openai"
 export const deepseekChatFunc = async (messages, sender, deepseekModelConfig, modelName) => {
     try {
         const openai = new OpenAI({
-            baseURL: 'https://maas-api.cn-huabei-1.xf-yun.com/v1',
+            baseURL: 'https://api.deepseek.com/v1',
             apiKey: deepseekModelConfig.apiKey,
             dangerouslyAllowBrowser: true,
             timeout: 5000
         })
         const completion = await openai.chat.completions.create({
-            model: 'xdeepseekr1',
+            model: modelName,
             messages,
             stream: true
         })
