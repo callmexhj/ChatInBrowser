@@ -13,8 +13,15 @@ ChatInBrowser可以让你在浏览器随时使用大模型进行聊天，更支�
 [Ernie-3.5](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/jlil56u11), [Ernie-4.0](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/clntwmv7t)
 #### [阿里通义千问大模型](https://help.aliyun.com/zh/dashscope/developer-reference/tongyiqianwen-large-language-models)
 [qwen-turbo](https://help.aliyun.com/zh/dashscope/developer-reference/model-introduction), [qwen-plus](https://help.aliyun.com/zh/dashscope/developer-reference/model-introduction), [qwen-max](https://help.aliyun.com/zh/dashscope/developer-reference/model-introduction)
+#### [DeepSeek](https://api-docs.deepseek.com/zh-cn/)
+[deepseek-chat(deepseek-v3)](https://api-docs.deepseek.com/zh-cn/quick_start/pricing)
+
+[deepseek-reasoner(deepseek-r1)](https://api-docs.deepseek.com/zh-cn/quick_start/pricing)
 
 ## 更新记录
+2025-03-03 (v1.0.5)
+1. 支持deepseek-v3和deepseek-r1模型
+
 2024-04-22 (v1.0.4)
 1. 支持通义千问qwen-turbo, qwen-plus, qwen-max模型
 
