@@ -3,6 +3,7 @@ import { genPromptText } from '@/tools/genPromptText'
 import { chatFunc } from '@/tools/openaichat'
 import { wenxinCon } from '@/tools/wenxin'
 import { tongyiChat } from '@/tools/tongyiChat'
+import { deepseekChatFunc } from '@/tools/deepseekchat'
 
 const checkModelConfig = () => {
     return new Promise((resolve, reject) => {
@@ -69,7 +70,9 @@ chrome.runtime.onMessage.addListener(async ({ action, data }, sender, sendRespon
                 await wenxinCon(messages, sender, modelConfig.wenxinModelConfig, modelConfig.modelName)
             } else if (modelConfig.model === 'Tongyi') {
                 await tongyiChat(messages, sender, modelConfig.tongyiModelConfig, modelConfig.modelName)
-            }
+            } else if (modelConfig.model === 'Deepseek') {
+                await deepseekChatFunc(messages, sender, modelConfig.deepseekModelConfig, modelConfig.modelName)
+            } 
         } catch (error) {
             await chrome.tabs.sendMessage(sender.tab.id, {
                 action: 'configError',

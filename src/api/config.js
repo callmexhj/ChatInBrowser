@@ -58,5 +58,17 @@ export const ApiConfig = {
         path: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation',
         version: 'empty',
         domain: 'empty'
-    }
+    },
+    deepseek_chat: {
+        name: 'deepseek-chat',
+        path: 'empty',
+        version: 'empty',
+        domain: 'empty'
+    },
+    deepseek_reasoner: {
+        name: 'deepseek-reasoner',
+        path: 'empty',
+        version: 'empty',
+        domain: 'empty'
+    },
 }

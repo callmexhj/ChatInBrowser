@@ -3,6 +3,14 @@
         <div class="messages" v-for="(message, index) in messages" :key="`${message.role}_${index}`"
             :class="messageStyle(message)" @mousemove.stop="handleMessageMove">
             <div class="message-item" v-if="message.role !== 'user'">
+                <div class="reasoning-content-header" v-if="message?.reasoningContent" @click="handleChangeHeader">
+                    <span>{{ t('content.thoughtContent') }}</span>
+                    <FullscreenExitOutlined class="icon-btn" v-if="headerStatus"/>
+                    <FullscreenOutlined class="icon-btn" v-else/>
+                </div>
+                <div class="reasoning-content-text" v-if="headerStatus">
+                    {{ message?.reasoningContent }}
+                </div>
                 <div class="md-content" v-html="messageContent(message, index)"></div>
                 <div class="icos">
                     <div class="model-version">{{ `${t('content.messageContent.modelVersionTitle')} ${message.model}` }}</div>
@@ -17,14 +25,17 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { message } from 'ant-design-vue'
+import { FullscreenOutlined, FullscreenExitOutlined } from '@ant-design/icons-vue'
 import 'highlight.js/styles/vs2015.min.css'
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
+
+const headerStatus = ref(true)
 
 const md = new MarkdownIt({
     highlight: function (str, lang) {
@@ -53,6 +64,10 @@ const props = defineProps({
         default: ''
     }
 })
+
+const handleChangeHeader = () => {
+    headerStatus.value = !headerStatus.value
+}
 
 const handleCopy = (messageValue) => {
     if (navigator.clipboard && window.isSecureContext) {
@@ -193,5 +208,33 @@ const messageContent = computed(() => {
 .model-version {
     font-size: 10px;
     color: #a0a0a0;
+}
+
+.reasoning-content {
+    display: flex;
+    gap: 12px;
+}
+
+.reasoning-content .ant-collapse-header {
+    padding: 0 8px;
+    font-size: 12px;
+}
+
+.reasoning-content-text {
+    color: #8b8b8b;
+    font-size: 10px;
+}
+
+.reasoning-content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #262626;
+    margin-bottom: 8px;
+    cursor: pointer;
 }
 </style>

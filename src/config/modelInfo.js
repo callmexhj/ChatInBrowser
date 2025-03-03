@@ -64,5 +64,19 @@ export const modelOptions = [
           label: 'qwen-max'
         }
       ]
+    },
+    {
+      value: 'Deepseek',
+      label: 'Deepseek',
+      children: [
+        {
+          value: ApiConfig.deepseek_chat.name,
+          label: 'chat'
+        },
+        {
+          value: ApiConfig.deepseek_reasoner.name,
+          label: 'reasoner'
+        },
+      ]
     }
   ]

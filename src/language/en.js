@@ -114,6 +114,7 @@ export const en = {
             cancelText: 'Use Later'
         },
         defaultAssistantMessage: 'Analyzing...',
+        thoughtContent: 'Thought content',
         tour: {
             nextBtnText: 'Next',
             prevBtnText: 'Previous',
